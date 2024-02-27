@@ -1,23 +1,14 @@
 
 //const config = require('./config.js');
+const {Pool} = require('pg');
 const {Sequelize} = require('sequelize');
 require('dotenv').config();
 
 
-const sequelize = new Sequelize({
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
-  database: process.env.DB_NAME,
   dialect: 'postgres',
-  pool: {
-    max: 15,
-    min: 5,
-    idle: 20000,
-    evict: 15000,
-    acquire: 30000
-  }, // Adjust the dialect based on your database type
 });
 
 
@@ -40,3 +31,17 @@ const connectToDatabase = async () => {
 module.exports = {
     connectToDatabase,
 };
+
+
+// const pool = new Pool({
+//   user: process.env.DB_USER,
+//   password: process.env.DB_PASSWORD,
+//   host: process.env.DB_HOST,
+//   port: process.env.DB_PORT,
+//   database: process.env.DB_NAME,
+//   max: 20, // Maximum number of clients in the pool
+//   idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
+//   connectionTimeoutMillis: 2000, // Abort any connection that takes longer than 2 seconds
+// });
+
+// module.exports = pool;
