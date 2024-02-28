@@ -1,10 +1,11 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('user',{
+  return sequelize.define('user', {
     user_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      primaryKey: true
     },
     name: {
       type: DataTypes.STRING(50),
@@ -35,15 +36,15 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'user',
     schema: 'public',
-    timestamps: true
-  }); 
+    timestamps: true,
+    indexes: [
+      {
+        name: "user_pkey",
+        unique: true,
+        fields: [
+          { name: "user_id" },
+        ]
+      },
+    ]
+  });
 };
-
-// // User.findOne = async (email) => {
-// //   return User.findOne({
-// //     where: {
-// //       email: email,
-// //     },
-// //   });
-// // };
-// // return User;
