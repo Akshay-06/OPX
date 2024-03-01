@@ -51,7 +51,7 @@ const signInController = async (req, res) => {
             console.log(existingUser.email, existingUser.password)
 
             if (!isPasswordOk)
-                return res.status(400).json({ message: "Invalid credintials!" })
+                return res.status(400).json({ message: "Invalid credentials!" })
 
             const token = jwt.sign({
                 email: existingUser.email,
