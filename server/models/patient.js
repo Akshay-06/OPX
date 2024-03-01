@@ -18,6 +18,14 @@ module.exports = function(sequelize, DataTypes) {
     age: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },email: {
+      type:DataTypes.STRING(255),
+      allowNull: false,
+      unique: "patient_email_key"
+    },
+    password: {
+      type:DataTypes.STRING(50),
+      allowNull: false
     },
     contact_no: {
       type: DataTypes.STRING(10),
@@ -54,6 +62,8 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'patient',
     schema: 'public',
     timestamps: true,
+    createdAt:'created_at',
+    updatedAt:'modified_at',
     indexes: [
       {
         name: "patient_contact_no_key",
