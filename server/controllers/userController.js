@@ -1,13 +1,16 @@
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const axios = require("axios")
-const { Sequelize } = require("sequelize")
+const { sequelize } = require('./dbconnector'); // Import sequelize instance
+const DataTypes = require('sequelize').DataTypes;
+
 //const config = require("config")
 //const multer = require("multer")
 //const path = require("path")
 //const { v4: uuidv4 } = require('uuid')
-const User = require("../models/user");
+const UserModel = require("../models/User");
 
+const User = UserModel(sequelize, DataTypes);
 
 
 // const storage = multer.diskStorage({
@@ -66,16 +69,15 @@ const signinController = async (req, res) => {
         if (email === "" || password === "")
             return res.status(400).json({ message: "Invalid field!" });
         try {
-            
-            const existingUser = await User.findOne({where:{ email}});
-            
+            const existingUser = await User.findOne({where:{ email}});  //{where:{ email}}
+            //console.log(existingUser);  
             if (!existingUser)
                 return res.status(404).json({ message: "Email doesn't exist!" })
 
-            const isPasswordOk = await bcrypt.compare(password, existingUser.password);
+            // const isPasswordOk = await bcrypt.compare(password, existingUser.password);
 
-            if (!isPasswordOk)
-                return res.status(400).json({ message: "Invalid credentials!" })
+            // if (!isPasswordOk)
+            //     return res.status(400).json({ message: "Invalid credentials!" })
 
             // const token = jwt.sign({
             //     email: existingUser.email,
