@@ -23,62 +23,14 @@ const signupController = async (req, res) => {
   }
 };
 const signinController = async (req, res) => {
-    // if (req.body.googleAccessToken) {
-    //     // gogole-auth
-    //     const { googleAccessToken } = req.body;
-
-    //     axios
-    //         .get("https://www.googleapis.com/oauth2/v3/userinfo", {
-    //             headers: {
-    //                 "Authorization": `Bearer ${googleAccessToken}`
-    //             }
-    //         })
-    //         .then(async response => {
-    //             const firstName = response.data.given_name;
-    //             const lastName = response.data.family_name;
-    //             const email = response.data.email;
-               
-    //             const existingUser = await User.findOne({ email })
-
-    //             if (!existingUser)
-    //                 return res.status(404).json({ message: "Email doesn't exist!" })
-
-    //             const token = jwt.sign({
-    //                 email: existingUser.email,
-    //                 id: existingUser._id
-    //             }, config.get("JWT_SECRET"), { expiresIn: "1h" })
-
-    //             res
-    //                 .status(200)
-    //                 .json({ result: existingUser, token })
-
-    //         })
-    //         .catch(err => {
-    //             res
-    //                 .status(400)
-    //                 .json({ message: "Invalid access token!" })
-    //         })
-    // } else {
-    //     // normal-auth
         const { email, password } = req.body;
         
         if (email === "" || password === "")
             return res.status(400).json({ message: "Invalid field!" });
         try {
             const existingUser = await User.findOne({where:{ email}});  //{where:{ email}}
-            //console.log(existingUser);  
             if (!existingUser)
                 return res.status(404).json({ message: "Email doesn't exist!" })
-
-            // const isPasswordOk = await bcrypt.compare(password, existingUser.password);
-
-            // if (!isPasswordOk)
-            //     return res.status(400).json({ message: "Invalid credentials!" })
-
-            // const token = jwt.sign({
-            //     email: existingUser.email,
-            //     id: existingUser._id
-            // }, config.get("JWT_SECRET"), { expiresIn: "1h" })
 
             res
                 .status(200)
@@ -91,80 +43,6 @@ const signinController = async (req, res) => {
     };
 
 //}
-
-// const signupController = async (req, res) => {
-//     if (req.body.googleAccessToken) {
-//         const { googleAccessToken } = req.body;
-
-//         axios
-//             .get("https://www.googleapis.com/oauth2/v3/userinfo", {
-//                 headers: {
-//                     "Authorization": `Bearer ${googleAccessToken}`
-//                 }
-//             })
-//             .then(async response => {
-//                 const firstName = response.data.given_name;
-//                 const lastName = response.data.family_name;
-//                 const email = response.data.email;
-//                 const picture = response.data.picture;
-//                 const userId = uuidv4();
-
-//                 const existingUser = await User.findOne({ email })
-
-//                 if (existingUser)
-//                     return res.status(400).json({ message: "Email already exists!" })
-
-//                 const result = await User.create({ verified: "true", email, firstName, lastName, profilePicture: picture, userId })
-
-//                 const token = jwt.sign({
-//                     email: result.email,
-//                     id: result._id
-//                 }, config.get("JWT_SECRET"), { expiresIn: "1h" })
-
-//                 res
-//                     .status(200)
-//                     .json({ result, token })
-//             })
-//             .catch(err => {
-//                 res
-//                     .status(400)
-//                     .json({ message: "Invalid access token!" })
-//             })
-
-//     } else {
-//         // normal form signup
-//         const { email, password, phoneNumber, confirmPassword, firstName, lastName } = req.body;
-//         const userId = uuidv4();
-//         const profilePicture ='';
-//         try {
-//             if (email === "" || password === "" || phoneNumber === "" || phoneNumber.length !== 10 || firstName === "" || lastName === "" && password === confirmPassword && password.length >= 4)
-//                 return res.status(400).json({ message: "Invalid field!" })
-
-//             const existingUser = await User.findOne({ email })
-
-//             if (existingUser)
-//                 return res.status(400).json({ message: "Email already exists!" })
-
-//             const hashedPassword = await bcrypt.hash(password, 12)
-
-//             const result = await User.create({ email, password: hashedPassword, firstName, lastName, phoneNumber, userId, profilePicture })
-
-//             const token = jwt.sign({
-//                 email: result.email,
-//                 id: result._id
-//             }, config.get("JWT_SECRET"), { expiresIn: "1h" })
-
-//             res
-//                 .status(200)
-//                 .json({ result, token })
-//         } catch (err) {
-//             res
-//                 .status(500)
-//                 .json({ message: "Something went wrong!" })
-//         }
-
-//     }
-// }
 
 // const forgotPasswordController = async (req, res) => {
 //     const { email } = req.body;
@@ -220,37 +98,7 @@ const getUserDetailsController = async (req, res) => {
         res.status(400).send("Error fetching User Details");
     }
 
-}
-
-// const updateUserDetailsController = async (req, res) => {
-//     const { phoneNumber, firstName, lastName, email } = req.body;
-//     let profilePicture = '';
-//     if(req.file){
-//         profilePicture = req.file.filename;
-//     }
-   
-//     try {
-//         const user = await User.findOne({ email });
-
-//         if (!user) {
-//             return res.status(404).json({ error: 'User not found' });
-//         }
-
-//         user.phoneNumber = phoneNumber;
-//         user.lastName = lastName;
-//         user.firstName = firstName;
-//         if(req.file){
-//             user.profilePicture = profilePicture;
-//         }
-//         const updatedUser = await user.save();
-//         res.status(200).json(updatedUser)
-
-//     } catch (error) {
-//         res.status(400).send("Error fetching User Details");
-//     }
-
-// }
-    
+};   
 
 module.exports = {
   signupController,
