@@ -4,8 +4,8 @@ const { signinController, signupController, forgotPasswordController, resetPassw
 
 const router = express.Router()
 
-router.post("/signin", signinController)
-//router.post("/signup", signupController)
+//router.post("/signin", signinController)
+router.post("/signup", signupController)
 //router.post("/forgot-password", forgotPasswordController)
 //router.post("/reset-password/:id/:token", resetPasswordController)
 

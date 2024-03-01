@@ -28,6 +28,15 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       unique: "hospitalstaff_contact_no_key"
     },
+    password:{
+      type: DataTypes.STRING(50),
+      allowNull: false
+    },
+    email:{
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      unique: "hospitalstaff_email_key"
+    },
     modified_at: {
       type: DataTypes.DATE,
       allowNull: true,
@@ -46,12 +55,20 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'hospitalstaff',
     schema: 'public',
     timestamps: true,
+    createdAt:'created_at',
+    updatedAt:'modified_at',
     indexes: [
       {
         name: "hospitalstaff_contact_no_key",
         unique: true,
         fields: [
           { name: "contact_no" },
+        ]
+      },{
+        name: "hospitalstaff_email_key",
+        unique: true,
+        fields: [
+          { name: "email" },
         ]
       },
       {
