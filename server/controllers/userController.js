@@ -1,31 +1,27 @@
-const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
-const axios = require("axios")
-const { sequelize } = require('./dbconnector'); // Import sequelize instance
-const DataTypes = require('sequelize').DataTypes;
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const User = require("../models/User");
+// const { sequelize } = require('../dbconnector');
 
-//const config = require("config")
-//const multer = require("multer")
-//const path = require("path")
-//const { v4: uuidv4 } = require('uuid')
-const UserModel = require("../models/User");
+const signupController = async (req, res) => {
+  // normal form signup
+  const { name, email, password } = req.body;
+  console.log(email, name, password);
+  
+  try {
+    if (email === "" || password === "" || name === "")
+      return res.status(400).json({ message: "Invalid field!" });
 
-const User = UserModel(sequelize, DataTypes);
+    const result = new User({ name, email, password });
 
+    await result.save()
 
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, "public/images")
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, uuidv4() + '-' + Date.now() + path.extname(file.originalname))
-//     }
-// });
-
-// const upload = multer({
-//     storage: storage
-// })
-
+    res.status(200).json({ result });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Something went wrong!" });
+  }
+};
 const signinController = async (req, res) => {
     // if (req.body.googleAccessToken) {
     //     // gogole-auth
@@ -92,7 +88,7 @@ const signinController = async (req, res) => {
                 .status(500)
                 .json({ message: "Something went wrong!" ,details: err.message })
         }
-    }
+    };
 
 //}
 
@@ -254,13 +250,9 @@ const getUserDetailsController = async (req, res) => {
 //     }
 
 // }
+    
 
 module.exports = {
-    signinController,
-    //signupController,
-    //forgotPasswordController,
-    //resetPasswordController,
-    getUserDetailsController,
-    //updateUserDetailsController,
-    //upload
-}
+  signupController,
+  signinController,
+};

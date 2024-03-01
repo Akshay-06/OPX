@@ -1,7 +1,7 @@
 
 //const config = require('./config.js');
 const {Pool} = require('pg');
-const Sequelize = require('sequelize');
+const {Sequelize} = require('sequelize');
 require('dotenv').config();
 
 
@@ -18,7 +18,7 @@ const connectToDatabase = async () => {
       client = await sequelize.authenticate();
       //const res = await client.query('SELECT $1::text as message', ['Connected to PostgreSQL']);
       //const message = result.rows[0].message;
-     
+      //await sequelize.sync({alter: true});
       //console.log(message);
       return true; 
     } catch (error) {
@@ -29,7 +29,6 @@ const connectToDatabase = async () => {
   };
 
 module.exports = {
-    sequelize,
     connectToDatabase,
 };
 

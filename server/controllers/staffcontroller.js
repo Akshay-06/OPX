@@ -1,27 +1,71 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-//const {hospitalstaff} = require('./models/hospitalstaff.js');
+const { sequelize } = require("../config/dbConnector")
+const DataTypes = require('sequelize').DataTypes;
+const jwt = require("jsonwebtoken")
+const config = require("config")
 
-const router = express.Router();
-router.use(bodyParser.json());
+const HospitalstaffModel = require('../models/Hospitalstaff');
 
-router.post('/addStaff',async(req,res)=>{
-    const{fname,lname,role,department,contact_no} = req.body();
+const Hospitalstaff = HospitalstaffModel(sequelize, DataTypes);
 
-    try{
+const showAllStaffDetails = async (req, res) => {
 
-        const newStaff = await hospitalstaff.create({
-            fname,
-            lname,
-            role,
-            department,
-            contact_no,    
-        });
-        res.json(newStaff);
+    try {
+        const staffDetails = await Hospitalstaff.findAll();
+
+        res.status(200).json({ staffDetails });
+    } catch (err) {
+        console.log(err)
     }
-    catch (error){
-        console.error('Error inserting data into database:',error);
-        res.status(500).json({error:'Internal Server Error'});
-    }
-});
-module.exports = router;
+};
+
+const addStaffController = async (req, res) => {
+
+    const { fname, lname, jobrole, department, contact_no } = req.body;
+
+    try {
+        const addedStaff = await Hospitalstaff.create({ fname, lname, jobrole, department, contact_no, created_by: 'admin', modified_by: 'admin' });
+
+        res.status(200).json({ addedStaff });
+    } catch (err) {
+        res.status(500).json(err)
+    };
+};
+
+
+const signInController = async (req, res) => {
+    
+        // normal-auth
+        const { email, password } = req.body;
+        if (email === "" || password === "")
+            return res.status(400).json({ message: "Invalid field!" });
+        try {
+            const existingUser = await Hospitalstaff.findOne({where: { 
+                email: email
+            }})
+
+            if (!existingUser)
+                return res.status(404).json({ message: "Email doesn't exist!" })
+
+            const isPasswordOk = password === existingUser.password;
+
+            console.log(existingUser.email, existingUser.password)
+
+            if (!isPasswordOk)
+                return res.status(400).json({ message: "Invalid credintials!" })
+
+            const token = jwt.sign({
+                email: existingUser.email,
+                id: existingUser._id
+            }, config.get("JWT_SECRET"), { expiresIn: "1h" })
+
+            res
+                .status(200)
+                .json({ result: existingUser, token })
+        } catch (err) {
+            console.log(err)
+        }
+
+}
+
+
+module.exports = { showAllStaffDetails, addStaffController, signInController};

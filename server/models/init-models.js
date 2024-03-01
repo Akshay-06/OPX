@@ -2,7 +2,6 @@ var DataTypes = require("sequelize").DataTypes;
 var _decides = require("./decides");
 var _doctor = require("./doctor");
 var _generates = require("./generates");
-var _gigs = require("./gigs");
 var _hospitalstaff = require("./hospitalstaff");
 var _includes = require("./includes");
 var _invoice = require("./invoice");
@@ -18,7 +17,6 @@ function initModels(sequelize) {
   var decides = _decides(sequelize, DataTypes);
   var doctor = _doctor(sequelize, DataTypes);
   var generates = _generates(sequelize, DataTypes);
-  var gigs = _gigs(sequelize, DataTypes);
   var hospitalstaff = _hospitalstaff(sequelize, DataTypes);
   var includes = _includes(sequelize, DataTypes);
   var invoice = _invoice(sequelize, DataTypes);
@@ -75,7 +73,6 @@ function initModels(sequelize) {
     decides,
     doctor,
     generates,
-    gigs,
     hospitalstaff,
     includes,
     invoice,
