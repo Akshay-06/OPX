@@ -5,8 +5,6 @@ const config = require("config")
 
 const HospitalstaffModel = require('../models/Hospitalstaff');
 
-const Hospitalstaff = HospitalstaffModel(sequelize, DataTypes);
-
 const showAllStaffDetails = async (req, res) => {
 
     try {
@@ -66,6 +64,7 @@ const signInController = async (req, res) => {
         }
 
 }
+
 
 
 module.exports = { showAllStaffDetails, addStaffController, signInController};
