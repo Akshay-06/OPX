@@ -37,7 +37,54 @@ export const signup = (formData, navigate) => async (dispatch) => {
          }
      }
 
+     export const addServiceDetails = (data1, navigate) => async (dispatch) => {
+        try {
+            // signup user
+            const { data } = await api.addService(data1)
+   
+            dispatch({ type: REGISTER, data })
+            navigate("/opx/account/services")
+        } catch (err) {
+            console.log(err);
+            dispatch({ type: AUTH_ERROR, errorMessage: err.response.data.message })
+   
+        }
+    }
 
+
+
+
+
+     export const getAllServicesDetails = () => async (dispatch) => {
+             try {
+                 const { data } = await api.getAllServices();
+                 return data;
+             } catch (error) {
+                 console.log(error);
+             }
+         }
+
+
+         export const updateServiceDetails = (request, navigate) => async (dispatch) => {
+                 try {
+                     const { data } = await api.updateService(request);
+                     dispatch({ type: 'REGISTER', data })
+                     navigate("/opx/account/services");
+                 } catch (error) {
+                     console.log(error);
+                 }
+             }
+             
+   export const deleteServiceDetails= (request,navigate) => async(dispatch)=>{
+                     try {
+                         const { data } = await api.deleteService(request);
+                         console.log(request)
+                         navigate("/opx/account/services");
+                        
+                     } catch (error) {
+                         console.log(error)
+                     }
+                 }
 // export const signinGoogle = (accessToken, navigate) => async (dispatch) => {
 //     try {
 //         // login user
