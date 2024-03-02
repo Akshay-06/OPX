@@ -46,10 +46,19 @@ module.exports = function(sequelize, DataTypes) {
     },
     hstaff_id: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'hospitalstaff',
         key: 'hstaff_id'
+      },
+      email: {
+        type:DataTypes.STRING(255),
+        allowNull: false,
+        unique: "patient_email_key"
+      },
+      password: {
+        type:DataTypes.STRING(50),
+        allowNull: false
       }
     },
     modified_at: {
