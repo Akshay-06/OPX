@@ -2,55 +2,103 @@ import React, { useState } from "react";
 import '../css/PatientRegisterApp.css';
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, connect } from 'react-redux';
+import { signup } from "../redux/actions/auth";
+import Notification from "./Notification";
 
 
 
+const InitState = {
+    fname: "",
+    lname: "",
+    email: '',
+    contact_no: '',
+    password: '',
+    confirmPassword: '',
+    age: '',
+    address: ''
+}
 
 const PatientRegisterApp = (props) => {
-    
+
+    const nagivate = useNavigate();
+    const dispatch = useDispatch();
+    const [sForm,
+        setsForm] = useState(InitState)
+    const [showNotification, setShowNotification] = useState(false);
+    const userID = JSON.parse(localStorage.getItem("user_info")).result.hstaff_id;
+
+    const handleChange = (e) => setsForm({
+        ...sForm,
+        [e.target.name]: e.target.value
+    });
+
+    function handleOnSubmit(e) {
+        e.preventDefault();
+        if (sForm.fname !== "" && sForm.lname !== "" && sForm.contact_no !== "" && sForm.password !== "" && sForm.confirmPassword !== "" && sForm.email !== "" && sForm.password === sForm.confirmPassword && sForm.password.length >= 4 && sForm.address !== "" && sForm.age !== "") {
+             sForm.hstaff_id = userID
+            dispatch(signup(sForm, nagivate))
+            setShowNotification(true);
+            setTimeout(() => {
+                setShowNotification(false);
+                setsForm(InitState);
+            }, 3000);
+        }
+    }
 
     return (
         <div className='register'>
-            
+            {showNotification && (
+                <Notification
+                    message="Patient Registration Successful!"
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
             <div className="app-register">
-                
                 <div className='registerForm'>
                     <div className="title">Patient Registration</div>
                     <div className="content">
-                        <form action="#" className="register-form" >
+                        <form action="#" className="register-form" onSubmit={handleOnSubmit}>
                             <div className="user-details">
                                 <div className="input-box">
                                     <span className="details">First Name</span>
-                                    <input  name='firstName' type="text" placeholder="Enter your first name" required />
+                                    <input name='fname' value={sForm.fname} onChange={handleChange} type="text" placeholder="Enter Patient's first name" required />
                                 </div>
                                 <div className="input-box">
                                     <span className="details">Last name</span>
-                                    <input type="text" name="lastName"  placeholder="Enter your last name" required />
+                                    <input type="text" value={sForm.lname} name="lname" onChange={handleChange} placeholder="Enter Patient's last name" required />
                                 </div>
                                 <div className="input-box">
                                     <span className="details">Email</span>
-                                    <input type="email" name="email"  placeholder="Enter your email" required />
+                                    <input type="email" name="email" value={sForm.email} onChange={handleChange} placeholder="Enter Patient's email" required />
                                 </div>
                                 <div className="input-box">
                                     <span className="details">Contact Number</span>
-                                    <input type='tel' name='phoneNumber' pattern="[0-9]{10}" placeholder="Enter your number" required />
+                                    <input type='tel' name='contact_no' pattern="[0-9]{10}" value={sForm.contact_no} onChange={handleChange} placeholder="Enter Patient's number" required />
                                 </div>
                                 <div className="input-box">
                                     <span className="details">Password</span>
-                                    <input type="password" name="password" placeholder="Enter your password" required />
+                                    <input type="password" name="password" value={sForm.password} onChange={handleChange} placeholder="Enter password" required />
                                 </div>
                                 <div className="input-box">
                                     <span className="details">Confirm Password</span>
-                                    <input type="password" name="confirmPassword" placeholder="Confirm your password" required />
+                                    <input type="password" name="confirmPassword" onChange={handleChange} value={sForm.confirmPassword} placeholder="Confirm password" required />
+                                </div>
+                                <div className="input-box">
+                                    <span className="details">Age</span>
+                                    <input type="number" name="age" onChange={handleChange} value={sForm.age}  placeholder="Enter Patient's age" maxLength="3" required />
+                                </div>
+                                <div className="input-box">
+                                    <span className="details">Address</span>
+                                    <input type="text" name="address" onChange={handleChange} value={sForm.address}  placeholder="Enter Patient's Address" required />
                                 </div>
                             </div>
-                            
-                            <div class="button">
+
+                            <div className="button">
                                 <input type="submit" value="Register" />
                             </div>
                             {props.errorMessage && <div className="error-message">{props.errorMessage}</div>}
-                        
-                            
+
+
                         </form>
                     </div>
                 </div>

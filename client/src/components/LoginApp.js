@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import '../css/LoginApp.css'
-import { useDispatch, connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import { signin } from "../redux/actions/auth";
 
 const LoginApp = (props) => {
     const [userType, setUserType] = useState("");
@@ -18,12 +19,14 @@ const LoginApp = (props) => {
             if(userType == "Patient"){
                 
                 console.log("Patient")
+               
             }
             if(userType == "Doctor"){
                 console.log("Doctor")
             }
             if(userType == "Hospital Staff"){
                 console.log("Hospital Staff")
+                dispatch(signin({ email, password },"/staff", navigate))
             }
 
         //   dispatch(signin({ email, password }, navigate))
@@ -59,5 +62,11 @@ const LoginApp = (props) => {
     )
 }
 
+const mapStateToProps = (state) => {
+    console.log(state);
+    return {
+      errorMessage: state.auth.errorMessage,
+    };
+  };
 
-export default (LoginApp);
+export default connect(mapStateToProps)(LoginApp);

@@ -4,7 +4,7 @@ import "@fontsource/luckiest-guy";
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-const HeaderApp = () => {
+const HeaderApp = ({ authenticated, handleLogOut }) => {
 
 
   const [color, setColor] = useState('transparent');
@@ -34,16 +34,29 @@ const HeaderApp = () => {
 
   return (
     <div className='app-header' style={isHomePage ? { backgroundColor: `${color}` } : { backgroundColor: '#861f41' }}>
-      
-      <Link className='logo-and-title-disabled' to="/opx" onClick={ (event) => event.preventDefault() }>
+      {authenticated ? <Link className='logo-and-title-disabled' to="/opx" onClick={(event) => event.preventDefault()}>
         <img src='/images/logo.png' alt='logo'></img>
         <span>OPX</span>
       </Link>
+        :
+        <Link className='logo-and-title' to="/opx" >
+          <img src='/images/logo.png' alt='logo'></img>
+          <span>OPX</span>
+        </Link>}
 
+      {authenticated ?
+        <div className='features-link'>
+          {/* <p><i className='fa fa-bell' />&nbsp;<Link>Notifications</Link></p> */}
+          {/* <p><i className='fa fa-home' />&nbsp;<Link to="/hokieforu/account/home">Home</Link> </p>
+          <p><i className='fa fa-suitcase' />&nbsp;<Link to="/hokieforu/account/myjobs">My Jobs</Link></p>
+          <p><i className='fa fa-user' />&nbsp;<Link to="/hokieforu/account/myprofile" className='profile-button'>My Profile</Link></p> */}
+          <Link onClick={handleLogOut} className='login-button' to="/opx">Logout</Link>
+        </div>
+        :
         <div>
           <Link to="/opx/login" className='login-button'>Login</Link>
         </div>
-      
+      }
     </div>
   )
 }

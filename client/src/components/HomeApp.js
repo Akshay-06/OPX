@@ -96,7 +96,7 @@ const HomeApp = () => {
             </div>
 
           </div><div className='copyright'>
-            Copyright &copy;, 2023 HokieForU.com
+            Copyright &copy;, 2023 OPX.com
           </div>
         </div>
       </footer>

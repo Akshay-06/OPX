@@ -31,6 +31,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(10),
       allowNull: false,
       unique: "patient_contact_no_key"
+    },email: {
+      type:DataTypes.STRING(255),
+      allowNull: false,
+      unique: "patient_email_key"
+    },
+    password: {
+      type:DataTypes.STRING(50),
+      allowNull: false
     },
     address: {
       type: DataTypes.TEXT,
