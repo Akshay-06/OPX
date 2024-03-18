@@ -53,7 +53,6 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'hospitalstaff',
-    schema: 'public',
     timestamps: true,
     createdAt:'created_at',
     updatedAt:'modified_at',

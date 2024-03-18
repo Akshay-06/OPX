@@ -19,16 +19,16 @@ const AccountApp = () => {
             <div className="search-jobs">
                 <Link to="/opx/account/doctor-register">REGISTER A DOCTOR</Link>
             </div>
+            
+            </div>
+            <div className="register-buttons">
+            <div className="search-jobs">
+                <Link to="/opx/account/services">SERVICES</Link>
+            </div>
             </div>
             <div className="jobs-container">
 
-                <div className="buttons">
-                    <h1>Available Jobs</h1>
-                    <Link to="/hokieforu/account/post-a-job">Post a job</Link>
-                </div>
-
-
-
+               
             </div>
 
 

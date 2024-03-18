@@ -5,6 +5,8 @@ const config = require("config")
 
 const HospitalstaffModel = require('../models/Hospitalstaff');
 
+const Hospitalstaff = HospitalstaffModel(sequelize, DataTypes);
+
 const showAllStaffDetails = async (req, res) => {
 
     try {
@@ -18,10 +20,10 @@ const showAllStaffDetails = async (req, res) => {
 
 const addStaffController = async (req, res) => {
 
-    const { fname, lname, jobrole, department, contact_no } = req.body;
+    const { fname, lname, jobrole, department, contact_no, email, password } = req.body;
 
     try {
-        const addedStaff = await Hospitalstaff.create({ fname, lname, jobrole, department, contact_no, created_by: 'admin', modified_by: 'admin' });
+        const addedStaff = await Hospitalstaff.create({ fname, lname, jobrole, department, contact_no, email, password, created_by: 'admin', modified_by: 'admin' });
 
         res.status(200).json({ addedStaff });
     } catch (err) {
@@ -64,7 +66,6 @@ const signInController = async (req, res) => {
         }
 
 }
-
 
 
 module.exports = { showAllStaffDetails, addStaffController, signInController};
