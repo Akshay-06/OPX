@@ -31,11 +31,14 @@ const LoginApp = (props) => {
 
         //   dispatch(signin({ email, password }, navigate))
         }
+        else{
+
+        }
       }
     return (
         <div className='app-login'>
             <div className="login-container">
-                <form action="#" className='login-form'>
+                <form action="#" className='login-form' onSubmit={handleSubmit}>
                     <h1>Welcome back</h1>
                         <select onChange={e => setUserType(e.target.value)}>
                             <option>--Select User Type--</option>
@@ -51,7 +54,7 @@ const LoginApp = (props) => {
                         </div>
                     </div>
                     <div className='sigin'>
-                        <button className='signin-button' onClick={handleSubmit}>Sign In</button>
+                        <button type="submit" className='signin-button' >Sign In</button>
                     </div>
                     {props.errorMessage && <div className="error-message">{props.errorMessage}</div>}
                     

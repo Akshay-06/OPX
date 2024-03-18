@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { getAllServicesDetails } from '../redux/actions/auth';
-import { addServiceDetails, updateServiceDetails, deleteServiceDetails } from '../redux/actions/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { getAllServicesDetails, addServiceDetails, updateServiceDetails, deleteServiceDetails } from '../redux/actions/auth';
 import Notification from './Notification';
 import '../css/ServicesApp.css';
 
@@ -15,80 +14,81 @@ const ServicesApp = () => {
   const [showDeleteNotification, setShowDeleteNotification] = useState(false);
   const [editServiceId, setEditServiceId] = useState(null);
   const [editedServiceFee, setEditedServiceFee] = useState(null);
-  const userID = JSON.parse(localStorage.getItem("user_info")).result.hstaff_id;
+  const [isConfirmationShown, setIsConfirmationShown] = useState(false);
+  const userID = JSON.parse(localStorage.getItem('user_info')).result.hstaff_id;
 
-  const [refreshKey, setRefreshKey] = useState(0);
-
-  const handleRefresh = () => {
-    setRefreshKey(prevKey => prevKey + 1);
-  };
+  const serviceDetails = useSelector(state => state.serviceDetails);
 
   useEffect(() => {
     fetchServicesData();
-  }, [refreshKey]);
+  }, []);
 
-  async function fetchServicesData() {
+  useEffect(() => {
+    setServices(serviceDetails);
+  }, [serviceDetails]);
+
+  const fetchServicesData = async () => {
     const response = await dispatch(getAllServicesDetails());
     setServices(response.serviceDetails);
-  }
+  };
 
   const handleEditServiceFee = (serviceId, currentServiceFee) => {
-    if(editServiceId === serviceId)
-    return;
+    if (editServiceId === serviceId) return;
     setEditServiceId(serviceId);
     setEditedServiceFee(currentServiceFee);
+    setIsConfirmationShown(false); // Reset the flag
   };
 
   const handleSaveServiceFee = async (serviceId) => {
-    if (editedServiceFee !== null && editedServiceFee !== services.find(service => service.service_id === serviceId).service_fee) {
+    if (!isConfirmationShown && editedServiceFee !== null && editedServiceFee !== services.find(service => service.service_id === serviceId).service_fee) {
       const confirmed = window.confirm("Are you sure you want to save the changes?");
+      setIsConfirmationShown(true); // Set the flag to true after showing confirm dialog
       if (confirmed) {
-         dispatch(updateServiceDetails({ service_id: serviceId, service_fee: editedServiceFee, hstaff_id: userID },navigate));
+        await dispatch(updateServiceDetails({ service_id: serviceId, service_fee: editedServiceFee, hstaff_id: userID }, navigate));
         setShowUpdateNotification(true);
         setTimeout(() => {
           setShowUpdateNotification(false);
         }, 3000);
-        handleRefresh();
+        fetchServicesData();
       }
     }
     setEditServiceId(null);
     setEditedServiceFee(null);
   };
-  
 
   const handleCancelEdit = () => {
     setEditServiceId(null);
     setEditedServiceFee(null);
+    setIsConfirmationShown(false); // Reset the flag
   };
 
-
-  function handleAddService(e) {
+  const handleAddService = async () => {
     const serviceName = prompt('Please enter the service name you want to add');
     const serviceFee = prompt('Please enter the cost of your service provided');
     if (serviceFee && serviceName) {
-      dispatch(addServiceDetails({ service_name: serviceName, service_fee: serviceFee, hstaff_id: userID }, navigate));
+      await dispatch(addServiceDetails({ service_name: serviceName, service_fee: serviceFee, hstaff_id: userID }, navigate));
       setShowAddNotification(true);
       setTimeout(() => {
         setShowAddNotification(false);
       }, 3000);
-      handleRefresh();
+      fetchServicesData(); // Fetch updated services after adding
     }
-  }
+  };
 
   const handleDeleteService = async (serviceId) => {
-    const confirmed = window.confirm("Are you sure you want to delete this service?");
+    const confirmed = window.confirm('Are you sure you want to delete this service?');
     if (confirmed) {
-      await dispatch(deleteServiceDetails({service_id:serviceId},navigate));
+      await dispatch(deleteServiceDetails({ service_id: serviceId }, navigate));
       setShowDeleteNotification(true);
       setTimeout(() => {
         setShowDeleteNotification(false);
       }, 3000);
-      handleRefresh();
+      fetchServicesData(); // Fetch updated services after deleting
     }
   };
 
   return (
-    <div className='fetch-services-container'>
+    <div className="fetch-services-container">
       {showUpdateNotification && (
         <Notification
           message="Service Fee Updated Successfully!"
@@ -101,7 +101,7 @@ const ServicesApp = () => {
           onClose={() => setShowAddNotification(false)}
         />
       )}
-            {showDeleteNotification && (
+      {showDeleteNotification && (
         <Notification
           message="Service Deleted Successfully!"
           onClose={() => setShowDeleteNotification(false)}
@@ -109,7 +109,7 @@ const ServicesApp = () => {
       )}
 
       <h1>Services</h1>
-      <button className='buttons' onClick={handleAddService}>Add Service</button>
+      <button className="buttons" onClick={handleAddService}>Add Service</button>
       <table id="customers">
         <thead>
           <tr>
@@ -121,13 +121,12 @@ const ServicesApp = () => {
           </tr>
         </thead>
         <tbody>
-          {services.map((service) => (
+          {services && services.map((service) => (
             <tr key={service.service_id}>
               <td>{service.service_id}</td>
               <td>{service.service_name}</td>
-              
+              <td>
                 {editServiceId === service.service_id ? (
-                  <td>
                   <input
                     type="text"
                     value={editedServiceFee}
@@ -141,16 +140,16 @@ const ServicesApp = () => {
                       }
                     }}
                     autoFocus
-                  /></td>
+                  />
                 ) : (
-                  <td>
-                    {service.service_fee}
-                  </td>
+                  service.service_fee
                 )}
-                <td>
-                 <i className='fa fa-edit' onClick={() => handleEditServiceFee(service.service_id, service.service_fee)}></i></td>
-                 <td>
-                <i className='fa fa-trash-alt' onClick={() => handleDeleteService(service.service_id)}></i>
+              </td>
+              <td>
+                <i className="fa fa-edit" onClick={() => handleEditServiceFee(service.service_id, service.service_fee)}></i>
+              </td>
+              <td>
+                <i className="fa fa-trash-alt" onClick={() => handleDeleteService(service.service_id)}></i>
               </td>
             </tr>
           ))}
@@ -158,6 +157,6 @@ const ServicesApp = () => {
       </table>
     </div>
   );
-}
+};
 
 export default ServicesApp;
