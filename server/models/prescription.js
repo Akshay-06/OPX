@@ -48,7 +48,6 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'prescription',
-    schema: 'public',
     timestamps: true,
     indexes: [
       {

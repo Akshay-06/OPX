@@ -47,7 +47,6 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'invoice',
-    schema: 'public',
     timestamps: true,
     indexes: [
       {

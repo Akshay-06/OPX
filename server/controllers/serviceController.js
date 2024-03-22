@@ -30,14 +30,13 @@ const addService = async(req,res) => {
 }
 
 const updateService = async(req,res) => {
-    const {service_name,service_fee, service_id, hstaff_id} = req.body;
+    const {service_fee, service_id, hstaff_id} = req.body;
     try{
 
         const serviceRecord = await Service.findOne({where : {service_id:service_id}});
         const decidesRecord = await Decides.findOne({where:{service_id:service_id,hstaff_id:hstaff_id}})
         if(serviceRecord)
         {
-            serviceRecord.service_name = service_name;
             serviceRecord.service_fee = service_fee;
             serviceRecord.modified_by = hstaff_id;
             serviceRecord.save();
