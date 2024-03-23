@@ -24,6 +24,18 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       unique: "doctor_contact_no_key"
     },
+    hstaff_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'hospitalstaff',
+        key: 'hstaff_id'
+      },
+      password: {
+        type:DataTypes.STRING(50),
+        allowNull: false
+      }
+    },
     modified_at: {
       type: DataTypes.DATE,
       allowNull: true,
