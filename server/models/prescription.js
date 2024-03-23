@@ -49,6 +49,8 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'prescription',
     timestamps: true,
+    createdAt:'created_at',
+    updatedAt:'modified_at',
     indexes: [
       {
         name: "prescription_pkey",
