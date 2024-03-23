@@ -37,6 +37,21 @@ export const signup = (formData, navigate) => async (dispatch) => {
          }
      }
 
+
+     export const signupDoctor = (formData, navigate) => async (dispatch) => {
+        try {
+            // signup user
+            const { data } = await api.signUpDoctor(formData)
+   
+            dispatch({ type: REGISTER, data })
+            navigate("/opx/account/doctor-register")
+        } catch (err) {
+            console.log(err);
+            dispatch({ type: AUTH_ERROR, errorMessage: err.response.data.message })
+   
+        }
+    }
+
      export const addServiceDetails = (data1, navigate) => async (dispatch) => {
         try {
             // signup user
