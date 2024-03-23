@@ -30,11 +30,11 @@ module.exports = function(sequelize, DataTypes) {
       references: {
         model: 'hospitalstaff',
         key: 'hstaff_id'
-      },
-      password: {
-        type:DataTypes.STRING(50),
-        allowNull: false
       }
+    },
+    password: {
+      type:DataTypes.STRING(50),
+      allowNull: false
     },
     modified_at: {
       type: DataTypes.DATE,
@@ -53,6 +53,8 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'doctor',
     timestamps: true,
+    createdAt:'created_at',
+    updatedAt:'modified_at',
     indexes: [
       {
         name: "doctor_contact_no_key",

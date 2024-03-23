@@ -1,5 +1,7 @@
 const { sequelize } = require("../config/dbConnector")
 const DataTypes = require('sequelize').DataTypes;
+const jwt = require("jsonwebtoken")
+const config = require("config")
 
 const DoctorModel = require('../models/Doctor');
 
@@ -10,9 +12,8 @@ const registerDoctorController = async (req, res) => {
     const { fname, lname, specialization, contact_no, hstaff_id } = req.body;
 
     try {
-        password = fname + "_" + lname;
-        const registerDoctor = await Doctor.create({ fname, lname, specialization, contact_no, password, hstaff_id, created_by: hstaff_id, modified_by: 'admin' });
-
+        password = fname + "_" + lname;as
+        const registerDoctor = await Doctor.create({ fname, lname, specialization, contact_no, password, hstaff_id, created_by: hstaff_id, modified_by: hstaff_id });
         res.status(200).json({ registerDoctor });
     } catch (err) {
         res.status(500).json(err)
