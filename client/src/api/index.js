@@ -15,6 +15,8 @@ export const signIn = (data,api) => API.post(api+"/signin", data)
 export const signUp = (data,api) => API.post("staff/register-patient", data)
 export const signUpDoctor = (data,api) => API.post("staff/register-doctor", data)
 
+export const createPrescription = (data,api) => API.post("doctor/prescription", data)
+
 export const getAllServices = (data) => API.get(`/staff/allServiceDetails`)
 export const addService = (data) => API.post(`/staff/addService`,data)
 

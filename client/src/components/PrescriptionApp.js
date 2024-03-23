@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import '../css/PatientRegisterApp.css';
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, connect } from 'react-redux';
-import { signup } from "../redux/actions/auth";
+import { createPrescription } from "../redux/actions/auth";
 import Notification from "./Notification";
 
 
@@ -31,8 +31,8 @@ const PrescriptionApp = (props) => {
     function handleOnSubmit(e) {
         e.preventDefault();
         if (sForm.date_prescribed !== "" && sForm.labtests !== "" && sForm.medication !== "" && sForm.p_id !== "" ) {
-             sForm.hstaff_id = userID
-            dispatch(signup(sForm, nagivate))
+             sForm.doctor_id = userID
+            dispatch(createPrescription(sForm, nagivate))
             setShowNotification(true);
             setTimeout(() => {
                 setShowNotification(false);
