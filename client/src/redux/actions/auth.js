@@ -14,6 +14,10 @@ export const signin = (data2, Api, navigate) => async (dispatch) => {
     try {
         const { data } = await api.signIn(data2,Api)
         dispatch({ type: AUTH, data })
+        if(Api === 'doctor'){
+            navigate("opx/account/home/doctor")
+        }
+        else
         navigate("/opx/account/home")
 
     } catch (error) {

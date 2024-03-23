@@ -23,7 +23,7 @@ const LoginApp = (props) => {
             }
             if(userType == "Doctor"){
                 console.log("Doctor")
-                dispatch(signin({email,password},"/doctor",navigate))
+                dispatch(signin({doctor_id: email,password},"/doctor",navigate))
             }
             if(userType == "Hospital Staff"){
                 console.log("Hospital Staff")
