@@ -7,4 +7,4 @@ const router = express.Router()
 
 router.post("/signin", signInController)
 
-models.export = router;
+module.exports = router;

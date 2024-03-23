@@ -13,7 +13,7 @@ app.set('port', 8000);
 app.use(cors())
 app.use(express.json());
 app.use("/staff", staffRoutes);
-app.use("/doctor", doctorRoutes);
+app.use("/doctor",doctorRoutes);
 app.use(express.static('public'));
 
 const init = async () => {
