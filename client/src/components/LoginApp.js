@@ -23,6 +23,7 @@ const LoginApp = (props) => {
             }
             if(userType == "Doctor"){
                 console.log("Doctor")
+                dispatch(signin({doctor_id: email,password},"/doctor",navigate))
             }
             if(userType == "Hospital Staff"){
                 console.log("Hospital Staff")
@@ -46,7 +47,7 @@ const LoginApp = (props) => {
                             <option>Doctor</option>
                             <option>Hospital Staff</option>
                         </select>
-                    <input type="email" onChange={e => setEmail(e.target.value)} placeholder="Email" required/>
+                    <input type="text" onChange={e => setEmail(e.target.value)} placeholder="Username" required/>
                     <input type="password" onChange={e => setPassword(e.target.value)} placeholder="Password" required/>
                     <div className='forgotContainer'>
                         <div>

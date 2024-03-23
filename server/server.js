@@ -3,6 +3,7 @@ const http = require('http');
 const cors = require('cors')
 const {connectToDatabase} =  require('./config/dbConnector');
 const staffRoutes = require("./routes/staffRoutes")
+const doctorRoutes = require("./routes/doctorRoutes")
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.set('port', 8000);
 app.use(cors())
 app.use(express.json());
 app.use("/staff", staffRoutes);
+app.use("/doctor",doctorRoutes);
 app.use(express.static('public'));
 
 const init = async () => {

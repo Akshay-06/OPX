@@ -26,7 +26,7 @@
     color: #861f41;
 }
 
-.login-form input[type=email],
+.login-form input[type=text],
 input[type=password],select {
     width: 100%;
     outline: none;
