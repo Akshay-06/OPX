@@ -25,7 +25,7 @@ const registerDoctorController = async (req, res) => {
     const { fname, lname, specialization, contact_no, hstaff_id } = req.body;
 
     try {
-        password = fname + "_" + lname;as
+        password = fname + "_" + lname;
         const registerDoctor = await Doctor.create({ fname, lname, specialization, contact_no, password, hstaff_id, created_by: hstaff_id, modified_by: hstaff_id });
         res.status(200).json({ registerDoctor });
     } catch (err) {

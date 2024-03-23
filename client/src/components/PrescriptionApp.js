@@ -1,27 +1,27 @@
 import React, { useState } from "react";
-import '../css/DoctorRegisterApp.css';
+import '../css/PatientRegisterApp.css';
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, connect } from 'react-redux';
-import { signupDoctor } from "../redux/actions/auth";
+import { createPrescription } from "../redux/actions/auth";
 import Notification from "./Notification";
 
 
 
 const InitState = {
-    fname: "",
-    lname: "",
-    contact_no: '',
-    specialization: ''
+    date_prescribed: "",
+    labtests: "",
+    medication: '',
+    p_id: ''
 }
 
-const DoctorRegisterApp = (props) => {
+const PrescriptionApp = (props) => {
 
     const nagivate = useNavigate();
     const dispatch = useDispatch();
     const [sForm,
         setsForm] = useState(InitState)
     const [showNotification, setShowNotification] = useState(false);
-    const userID = JSON.parse(localStorage.getItem("user_info")).result.hstaff_id;
+    const userID = JSON.parse(localStorage.getItem("user_info")).result.doctor_id;
 
     const handleChange = (e) => setsForm({
         ...sForm,
@@ -30,9 +30,9 @@ const DoctorRegisterApp = (props) => {
 
     function handleOnSubmit(e) {
         e.preventDefault();
-        if (sForm.fname !== "" && sForm.lname !== "" && sForm.contact_no !== "" && sForm.specialization !== "") {
-             sForm.hstaff_id = userID
-            dispatch(signupDoctor(sForm, nagivate))
+        if (sForm.date_prescribed !== "" && sForm.labtests !== "" && sForm.medication !== "" && sForm.p_id !== "" ) {
+             sForm.doctor_id = userID
+            dispatch(createPrescription(sForm, nagivate))
             setShowNotification(true);
             setTimeout(() => {
                 setShowNotification(false);
@@ -45,36 +45,37 @@ const DoctorRegisterApp = (props) => {
         <div className='register'>
             {showNotification && (
                 <Notification
-                    message="Doctor Registration Successful!"
+                    message="Prescription Created Successful!"
                     onClose={() => setShowNotification(false)}
                 />
             )}
             <div className="app-register">
                 <div className='registerForm'>
-                    <div className="title">Doctor Registration</div>
+                    <div className="title">Create Prescription</div>
                     <div className="content">
                         <form action="#" className="register-form" onSubmit={handleOnSubmit}>
                             <div className="user-details">
                                 <div className="input-box">
-                                    <span className="details">First Name</span>
-                                    <input name='fname' value={sForm.fname} onChange={handleChange} type="text" placeholder="Enter Doctor's first name" required />
+                                    <span className="details">Date Prescribed</span>
+                                    <input name='date_prescribed' value={sForm.date_prescribed} onChange={handleChange} type="date" placeholder="Enter Date Prescribed" required />
                                 </div>
                                 <div className="input-box">
-                                    <span className="details">Last name</span>
-                                    <input type="text" value={sForm.lname} name="lname" onChange={handleChange} placeholder="Enter Doctor's last name" required />
+                                    <span className="details">Lab Tests</span>
+                                    <input type="text" value={sForm.labtests} name="labtests" onChange={handleChange} placeholder="Enter Lab Test" required />
                                 </div>
                                 <div className="input-box">
-                                    <span className="details">Contact Number</span>
-                                    <input type='tel' name='contact_no' pattern="[0-9]{10}" value={sForm.contact_no} onChange={handleChange} placeholder="Enter Doctor's number" required />
+                                    <span className="details">Medication</span>
+                                    <input type="text" name="medication" value={sForm.medication} onChange={handleChange} placeholder="Enter Medication" required />
                                 </div>
                                 <div className="input-box">
-                                    <span className="details">Specialization</span>
-                                    <input type="text" name="specialization" onChange={handleChange} value={sForm.specialization}  placeholder="Enter Doctor's Specialization" required />
+                                    <span className="details">Patient ID</span>
+                                    <input type='number' name='p_id' pattern="[0-9]{10}" value={sForm.p_id} onChange={handleChange} placeholder="Enter Patient's number" required />
                                 </div>
+                                
                             </div>
 
                             <div className="button">
-                                <input type="submit" value="Register" />
+                                <input type="submit" value="Create" />
                             </div>
                             {props.errorMessage && <div className="error-message">{props.errorMessage}</div>}
 
@@ -88,4 +89,4 @@ const DoctorRegisterApp = (props) => {
 }
 
 
-export default (DoctorRegisterApp);
+export default (PrescriptionApp);

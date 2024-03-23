@@ -14,6 +14,10 @@ export const signin = (data2, Api, navigate) => async (dispatch) => {
     try {
         const { data } = await api.signIn(data2,Api)
         dispatch({ type: AUTH, data })
+        if(Api === 'doctor'){
+            navigate("opx/account/home/doctor")
+        }
+        else
         navigate("/opx/account/home")
 
     } catch (error) {
@@ -45,6 +49,20 @@ export const signup = (formData, navigate) => async (dispatch) => {
    
             dispatch({ type: REGISTER, data })
             navigate("/opx/account/doctor-register")
+        } catch (err) {
+            console.log(err);
+            dispatch({ type: AUTH_ERROR, errorMessage: err.response.data.message })
+   
+        }
+    }
+
+    export const createPrescription = (formData, navigate) => async (dispatch) => {
+        try {
+            // signup user
+            const { data } = await api.createPrescription(formData)
+   
+            dispatch({ type: REGISTER, data })
+            navigate("/opx/account/prescription-create")
         } catch (err) {
             console.log(err);
             dispatch({ type: AUTH_ERROR, errorMessage: err.response.data.message })
