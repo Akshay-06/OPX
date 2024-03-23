@@ -4,8 +4,21 @@ const jwt = require("jsonwebtoken")
 const config = require("config")
 
 const DoctorModel = require('../models/Doctor');
+const PrescriptionModel = require('../models/Prescription');
 
 const Doctor = DoctorModel(sequelize, DataTypes);
+const Prescription = PrescriptionModel(sequelize, DataTypes);
+
+const createPrescription = async (req, res) => {
+    const { date_prescribed, labtests, medication, p_id, doctor_id } = req.body;
+
+    try {
+        const createPrescription = await Prescription.create({ date_prescribed, labtests, medication, p_id, doctor_id, created_by: doctor_id, modified_by: doctor_id });
+        res.status(200).json({ createPrescription });
+    } catch (err) {
+        res.status(500).json(err)
+    };
+}
 
 const registerDoctorController = async (req, res) => {
 
@@ -54,4 +67,4 @@ const signInController = async (req, res) => {
 
 }
 
-module.exports = {registerDoctorController, signInController}
+module.exports = {registerDoctorController, signInController, createPrescription}
