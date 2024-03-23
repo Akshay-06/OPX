@@ -7,6 +7,7 @@ import HeaderApp from './components/HeaderApp';
 import LoginApp from "./components/LoginApp";
 import AccountApp from "./components/AccountApp";
 import PatientRegisterApp from "./components/PatientRegisterApp";
+import DoctorRegisterApp from "./components/DoctorRegisterApp";
 import ServicesApp from "./components/ServicesApp";
 import './css/App.css';
 
@@ -40,6 +41,7 @@ function App() {
       <Route path='/opx/login' Component={LoginApp} />
       <Route path='/opx/account/home' Component={AccountApp} />
       <Route path="/opx/account/patient-register" Component={PatientRegisterApp} />
+      <Route path="/opx/account/doctor-register" Component={DoctorRegisterApp} />
       <Route path="/opx/account/services" Component={ServicesApp} />
       {/* <Route path="/opx/forgot-password" Component={ForgotPasswordApp}></Route>
       <Route path="/opx/reset-password/:id/:token" Component={ResetPasswordApp}></Route>
