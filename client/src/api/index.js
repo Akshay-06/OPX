@@ -17,11 +17,16 @@ export const signUpDoctor = (data,api) => API.post("staff/register-doctor", data
 
 export const createPrescription = (data,api) => API.post("doctor/prescription", data)
 
+export const generateInvoice = (data,api) => API.post("staff/generateInvoice", data)
+
 export const getAllServices = (data) => API.get(`/staff/allServiceDetails`)
 export const addService = (data) => API.post(`/staff/addService`,data)
 
 export const updateService = (data) => API.post(`/staff/updateService`,data)
 export const deleteService = (data) => API.post(`/staff/deleteService`,data)
+
+
+export const getAllPatients = (data) => API.get(`/patient/allPatients`)
 // export const signInGoogle = (accessToken) => API.post("/users/signin", {
 //     googleAccessToken: accessToken
 // })

@@ -44,13 +44,23 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'medicalrecord',
     timestamps: true,
+    createdAt:'created_at',
+    updatedAt:'modified_at',
     indexes: [
       {
-        name: "medicalrecord_pkey",
+        name: "PRIMARY",
         unique: true,
+        using: "BTREE",
         fields: [
           { name: "patient_id" },
           { name: "recorddate" },
+        ]
+      },
+      {
+        name: "doctor_id",
+        using: "BTREE",
+        fields: [
+          { name: "doctor_id" },
         ]
       },
     ]

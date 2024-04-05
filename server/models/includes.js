@@ -36,12 +36,22 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'includes',
     timestamps: true,
+    createdAt:'created_at',
+    updatedAt:'modified_at',
     indexes: [
       {
-        name: "includes_pkey",
+        name: "PRIMARY",
         unique: true,
+        using: "BTREE",
         fields: [
           { name: "service_id" },
+          { name: "invoice_no" },
+        ]
+      },
+      {
+        name: "invoice_no",
+        using: "BTREE",
+        fields: [
           { name: "invoice_no" },
         ]
       },

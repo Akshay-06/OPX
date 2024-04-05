@@ -40,10 +40,18 @@ module.exports = function(sequelize, DataTypes) {
     updatedAt:'modified_at',
     indexes: [
       {
-        name: "generates_pkey",
+        name: "PRIMARY",
         unique: true,
+        using: "BTREE",
         fields: [
           { name: "hstaff_id" },
+          { name: "invoice_no" },
+        ]
+      },
+      {
+        name: "invoice_no",
+        using: "BTREE",
+        fields: [
           { name: "invoice_no" },
         ]
       },
