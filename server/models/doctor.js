@@ -26,15 +26,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     hstaff_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'hospitalstaff',
         key: 'hstaff_id'
       }
-    },
-    password: {
-      type:DataTypes.STRING(50),
-      allowNull: false
     },
     modified_at: {
       type: DataTypes.DATE,
@@ -42,6 +38,10 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
     },
     created_by: {
+      type: DataTypes.STRING(50),
+      allowNull: false
+    },
+    PASSWORD: {
       type: DataTypes.STRING(50),
       allowNull: false
     },
@@ -57,17 +57,26 @@ module.exports = function(sequelize, DataTypes) {
     updatedAt:'modified_at',
     indexes: [
       {
+        name: "PRIMARY",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "doctor_id" },
+        ]
+      },
+      {
         name: "doctor_contact_no_key",
         unique: true,
+        using: "BTREE",
         fields: [
           { name: "contact_no" },
         ]
       },
       {
-        name: "doctor_pkey",
-        unique: true,
+        name: "doctor_hstaff_id_fkey",
+        using: "BTREE",
         fields: [
-          { name: "doctor_id" },
+          { name: "hstaff_id" },
         ]
       },
     ]

@@ -28,15 +28,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       unique: "hospitalstaff_contact_no_key"
     },
-    password:{
-      type: DataTypes.STRING(50),
-      allowNull: false
-    },
-    email:{
-      type: DataTypes.STRING(255),
-      allowNull: false,
-      unique: "hospitalstaff_email_key"
-    },
     modified_at: {
       type: DataTypes.DATE,
       allowNull: true,
@@ -49,6 +40,15 @@ module.exports = function(sequelize, DataTypes) {
     modified_by: {
       type: DataTypes.STRING(50),
       allowNull: false
+    },
+    email: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      unique: "hospitalstaff_email_key"
+    },
+    PASSWORD: {
+      type: DataTypes.STRING(50),
+      allowNull: false
     }
   }, {
     sequelize,
@@ -58,23 +58,27 @@ module.exports = function(sequelize, DataTypes) {
     updatedAt:'modified_at',
     indexes: [
       {
-        name: "hospitalstaff_contact_no_key",
+        name: "PRIMARY",
         unique: true,
+        using: "BTREE",
         fields: [
-          { name: "contact_no" },
-        ]
-      },{
-        name: "hospitalstaff_email_key",
-        unique: true,
-        fields: [
-          { name: "email" },
+          { name: "hstaff_id" },
         ]
       },
       {
-        name: "hospitalstaff_pkey",
+        name: "hospitalstaff_contact_no_key",
         unique: true,
+        using: "BTREE",
         fields: [
-          { name: "hstaff_id" },
+          { name: "contact_no" },
+        ]
+      },
+      {
+        name: "hospitalstaff_email_key",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "email" },
         ]
       },
     ]

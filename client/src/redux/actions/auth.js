@@ -70,6 +70,21 @@ export const signup = (formData, navigate) => async (dispatch) => {
         }
     }
 
+
+    export const generateInvoice = (formData, navigate) => async (dispatch) => {
+        try {
+            // signup user
+            const { data } = await api.generateInvoice(formData)
+   
+            dispatch({ type: REGISTER, data })
+            navigate("/opx/account/invoice")
+        } catch (err) {
+            console.log(err);
+            dispatch({ type: AUTH_ERROR, errorMessage: err.response.data.message })
+   
+        }
+    }
+
      export const addServiceDetails = (data1, navigate) => async (dispatch) => {
         try {
             // signup user
@@ -98,6 +113,19 @@ export const signup = (formData, navigate) => async (dispatch) => {
          }
 
 
+         export const getAllPatientsDetails = () => async (dispatch) => {
+            try {
+                const { data } = await api.getAllPatients();
+                return data;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+
+
+
+    
          export const updateServiceDetails = (request, navigate) => async (dispatch) => {
                  try {
                      const { data } = await api.updateService(request);
