@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
       unique: "service_service_name_key"
     },
     service_fee: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10,2),
       allowNull: false
     },
     modified_at: {
@@ -37,8 +37,9 @@ module.exports = function(sequelize, DataTypes) {
     updatedAt:'modified_at',
     indexes: [
       {
-        name: "service_pkey",
+        name: "PRIMARY",
         unique: true,
+        using: "BTREE",
         fields: [
           { name: "service_id" },
         ]
@@ -46,6 +47,7 @@ module.exports = function(sequelize, DataTypes) {
       {
         name: "service_service_name_key",
         unique: true,
+        using: "BTREE",
         fields: [
           { name: "service_name" },
         ]

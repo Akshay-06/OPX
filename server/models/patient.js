@@ -18,47 +18,22 @@ module.exports = function(sequelize, DataTypes) {
     age: {
       type: DataTypes.INTEGER,
       allowNull: false
-    },email: {
-      type:DataTypes.STRING(255),
-      allowNull: false,
-      unique: "patient_email_key"
-    },
-    password: {
-      type:DataTypes.STRING(50),
-      allowNull: false
     },
     contact_no: {
       type: DataTypes.STRING(10),
       allowNull: false,
       unique: "patient_contact_no_key"
-    },email: {
-      type:DataTypes.STRING(255),
-      allowNull: false,
-      unique: "patient_email_key"
-    },
-    password: {
-      type:DataTypes.STRING(50),
-      allowNull: false
     },
     address: {
       type: DataTypes.TEXT,
-      allowNull: true
+      allowNull: false
     },
     hstaff_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'hospitalstaff',
         key: 'hstaff_id'
-      },
-      email: {
-        type:DataTypes.STRING(255),
-        allowNull: false,
-        unique: "patient_email_key"
-      },
-      password: {
-        type:DataTypes.STRING(50),
-        allowNull: false
       }
     },
     modified_at: {
@@ -73,6 +48,15 @@ module.exports = function(sequelize, DataTypes) {
     modified_by: {
       type: DataTypes.STRING(50),
       allowNull: false
+    },
+    email: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      unique: "patient_email_key"
+    },
+    PASSWORD: {
+      type: DataTypes.STRING(50),
+      allowNull: false
     }
   }, {
     sequelize,
@@ -82,17 +66,34 @@ module.exports = function(sequelize, DataTypes) {
     updatedAt:'modified_at',
     indexes: [
       {
+        name: "PRIMARY",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "p_id" },
+        ]
+      },
+      {
         name: "patient_contact_no_key",
         unique: true,
+        using: "BTREE",
         fields: [
           { name: "contact_no" },
         ]
       },
       {
-        name: "patient_pkey",
+        name: "patient_email_key",
         unique: true,
+        using: "BTREE",
         fields: [
-          { name: "p_id" },
+          { name: "email" },
+        ]
+      },
+      {
+        name: "patient_hstaff_id_fkey",
+        using: "BTREE",
+        fields: [
+          { name: "hstaff_id" },
         ]
       },
     ]

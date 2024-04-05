@@ -16,12 +16,12 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     amount: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10,2),
       allowNull: false
     },
     payment_status: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: true
     },
     p_id: {
       type: DataTypes.INTEGER,
@@ -43,6 +43,14 @@ module.exports = function(sequelize, DataTypes) {
     modified_by: {
       type: DataTypes.STRING(50),
       allowNull: false
+    },
+    pres_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'prescription',
+        key: 'pres_id'
+      }
     }
   }, {
     sequelize,
@@ -52,10 +60,25 @@ module.exports = function(sequelize, DataTypes) {
     updatedAt:'modified_at',
     indexes: [
       {
-        name: "invoice_pkey",
+        name: "PRIMARY",
         unique: true,
+        using: "BTREE",
         fields: [
           { name: "invoice_no" },
+        ]
+      },
+      {
+        name: "p_id",
+        using: "BTREE",
+        fields: [
+          { name: "p_id" },
+        ]
+      },
+      {
+        name: "idx_prescription_pres_id",
+        using: "BTREE",
+        fields: [
+          { name: "pres_id" },
         ]
       },
     ]

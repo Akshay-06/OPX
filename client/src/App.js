@@ -11,6 +11,7 @@ import DoctorRegisterApp from "./components/DoctorRegisterApp";
 import ServicesApp from "./components/ServicesApp";
 import DoctorAccountApp from "./components/DoctorAccountApp";
 import PrescriptionApp from "./components/PrescriptionApp";
+import InvoiceApp from "./components/InvoiceApp";
 import './css/App.css';
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
       <Route path="/opx/account/doctor-register" Component={DoctorRegisterApp} />
       <Route path="/opx/account/prescription-create" Component={PrescriptionApp}/>
       <Route path="/opx/account/services" Component={ServicesApp} />
+      <Route path="/opx/account/invoice" Component={InvoiceApp} />
       {/* <Route path="/opx/forgot-password" Component={ForgotPasswordApp}></Route>
       <Route path="/opx/reset-password/:id/:token" Component={ResetPasswordApp}></Route>
       <Route path="/opx/account/myprofile" Component={ProfileApp} />

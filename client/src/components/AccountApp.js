@@ -25,6 +25,9 @@ const AccountApp = () => {
             <div className="search-jobs">
                 <Link to="/opx/account/services">SERVICES</Link>
             </div>
+            <div className="search-jobs">
+                <Link to="/opx/account/invoice">GENERATE INVOICE</Link>
+            </div>
             </div>
             <div className="jobs-container">
 

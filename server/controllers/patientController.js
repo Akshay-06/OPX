@@ -35,28 +35,38 @@ const registerPatientController = async (req, res) => {
 };
 
 const generateInvoice = async (req, res) => {
-  const { p_id } = req.body;
+  const { p_id, hstaff_id } = req.body;
   try {
       const prescription = await Prescription.findOne({
           where: { p_id: p_id },
-          attributes: ['labtests'],
+          attributes: ['labtests','pres_id'],
           order:[['created_at','DESC']],
           limit:1 
       });
       const patient = await Patient.findOne({where : {p_id: p_id}});
-      const hospitalstaff = await Hospitalstaff.findOne({where: {hstaff_id: patient.hstaff_id},attributes:['fname','lname']});
+
+      const hospitalstaff = await Hospitalstaff.findOne({where: {hstaff_id: hstaff_id},attributes:['fname','lname']});
       if (prescription) {
           const services = prescription.dataValues.labtests.split(",");
           let serviceFee;
           const consultationService = Service.findOne({ where: { service_name: "Consultation" }, attributes: ['service_fee'] });
-          const otherServiceCosts = Service.findAll({ where: { service_name: services.map(test => test.trim()) }, attributes: ['service_fee'] });
+          const otherServiceCosts = Service.findAll({ where: { service_name: services.map(test => test.trim()) }, attributes: ['service_fee','service_name'] });
           Promise.all([consultationService, otherServiceCosts])
-              .then(([consultationServiceData, otherServiceCostsData]) => {
+              .then(async ([consultationServiceData, otherServiceCostsData]) => {
                   if (consultationServiceData) {
                       serviceFee = consultationServiceData.service_fee;
+                      let invoice_structure = "Consultation Fee: "+parseFloat(serviceFee);
+                      invoice_structure+='\n';
                       let totalCost = 0;
                       if (otherServiceCostsData.length > 0) {
                           totalCost = otherServiceCostsData.reduce((acc, service) => acc + parseFloat(service.service_fee), 0);
+                          otherServiceCostsData.forEach((service, index) => {
+                                invoice_structure += `${service.service_name}: ${service.service_fee}\n`;
+                              
+
+                            // Add a comma and space for all except the last element
+                            
+                          });
                        }
                        else {
                           res.status(200).json({ totalCost: serviceFee });
@@ -69,20 +79,22 @@ const generateInvoice = async (req, res) => {
                       const invoiceDate = today.toISOString().split('T')[0]; 
                       const paymentStatus = 0;
 
-                      Invoice.create({
+                      invoice_structure += "Total Fee: "+ totalCost;
+
+                      console.log(invoice_structure)
+
+                      const invoice_details =await Invoice.create({
                           p_id: p_id,
+                          pres_id: prescription.pres_id,
                           billing_address: patient.address,
                           amount: totalCost,
                           invoice_date: invoiceDate,
                           payment_status: paymentStatus,
                           created_by: hospitalstaff.fname + ' ' + hospitalstaff.lname, 
                           modified_by: hospitalstaff.fname + ' ' + hospitalstaff.lname
-                      }).then(() => {
-                          res.status(200).json({ message: "Invoice created successfully" });
-                      }).catch(error => {
-                          console.error(`Error creating invoice: ${error.message}`);
-                          res.status(500).json({ error: 'Internal Server Error' });
-                      });
+                      })
+                          res.status(200).json({ message: "Invoice created successfully" , invoice_details, invoice_structure});
+                    
                   } else {
                       // Handle case where consultation service fee is not found
                       console.log("Consultation service fee not found");
@@ -92,7 +104,7 @@ const generateInvoice = async (req, res) => {
               .catch(error => {
                   // Handle any errors that occur during the process
                   console.error(`Error fetching service data: ${error.message}`);
-                  res.status(500).json({ error: 'Internal Server Error' });
+                  res.status(500).json({ error: 'Internal Server Error' + `${error.message}` });
               });
               
       }

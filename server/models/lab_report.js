@@ -44,12 +44,22 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'lab_report',
     timestamps: true,
+    createdAt:'created_at',
+    updatedAt:'modified_at',
     indexes: [
       {
-        name: "lab_report_pkey",
+        name: "PRIMARY",
         unique: true,
+        using: "BTREE",
         fields: [
           { name: "report_id" },
+        ]
+      },
+      {
+        name: "p_id",
+        using: "BTREE",
+        fields: [
+          { name: "p_id" },
         ]
       },
     ]
