@@ -14,6 +14,10 @@ const Service = ServiceModel(sequelize,DataTypes);
 const InvoiceModel = require('../models/invoice');
 const Invoice = InvoiceModel(sequelize,DataTypes);
 
+const HospitalstaffModel = require('../models/Hospitalstaff');
+
+const Hospitalstaff = HospitalstaffModel(sequelize, DataTypes);
+
 const registerPatientController = async (req, res) => {
 
     const { fname, lname, age, contact_no,email, password, address, hstaff_id } = req.body;
@@ -39,6 +43,8 @@ const generateInvoice = async (req, res) => {
           order:[['created_at','DESC']],
           limit:1 
       });
+      const patient = await Patient.findOne({where : {p_id: p_id}});
+      const hospitalstaff = await Hospitalstaff.findOne({where: {hstaff_id: patient.hstaff_id},attributes:['fname','lname']});
       if (prescription) {
           const services = prescription.dataValues.labtests.split(",");
           let serviceFee;
@@ -59,7 +65,24 @@ const generateInvoice = async (req, res) => {
                       // Add the service fee to the total cost
                       totalCost += parseFloat(serviceFee);
                       totalCost = totalCost.toFixed(2);
-                      res.status(200).json({ totalCost });
+                      const today = new Date();
+                      const invoiceDate = today.toISOString().split('T')[0]; 
+                      const paymentStatus = 0;
+
+                      Invoice.create({
+                          p_id: p_id,
+                          billing_address: patient.address,
+                          amount: totalCost,
+                          invoice_date: invoiceDate,
+                          payment_status: paymentStatus,
+                          created_by: hospitalstaff.fname + ' ' + hospitalstaff.lname, 
+                          modified_by: hospitalstaff.fname + ' ' + hospitalstaff.lname
+                      }).then(() => {
+                          res.status(200).json({ message: "Invoice created successfully" });
+                      }).catch(error => {
+                          console.error(`Error creating invoice: ${error.message}`);
+                          res.status(500).json({ error: 'Internal Server Error' });
+                      });
                   } else {
                       // Handle case where consultation service fee is not found
                       console.log("Consultation service fee not found");
@@ -80,6 +103,16 @@ const generateInvoice = async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
   }
 }
-  
 
-module.exports = {registerPatientController,generateInvoice}
+const showAllPatientDetails = async (req, res) => {
+
+  try {
+      const patientDetails = await Patient.findAll();
+
+      res.status(200).json({ patientDetails });
+  } catch (err) {
+      console.log(err)
+  }
+};
+
+module.exports = {registerPatientController,generateInvoice,showAllPatientDetails}
