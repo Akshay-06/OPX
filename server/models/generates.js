@@ -36,6 +36,8 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'generates',
     timestamps: true,
+    createdAt:'created_at',
+    updatedAt:'modified_at',
     indexes: [
       {
         name: "generates_pkey",
