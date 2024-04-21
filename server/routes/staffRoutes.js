@@ -5,6 +5,7 @@ const { registerPatientController,generateInvoice } = require("../controllers/pa
 const { registerDoctorController } = require("../controllers/doctorController")
 const {showAllServiceDetails, addService, updateService,deleteService} = require("../controllers/serviceController")
 
+
 const router = express.Router()
 
 router.get("/allStaff", showAllStaffDetails)
@@ -17,7 +18,6 @@ router.get("/allServiceDetails", showAllServiceDetails)
 router.post("/addService", addService)
 router.post("/updateService",updateService)
 router.post("/deleteService",deleteService)
-//router.post("/forgot-password", forgotPasswordController)
-//router.post("/reset-password/:id/:token", resetPasswordController)
+
 
 module.exports = router;

@@ -18,6 +18,9 @@ const HospitalstaffModel = require('../models/Hospitalstaff');
 
 const Hospitalstaff = HospitalstaffModel(sequelize, DataTypes);
 
+const MedicalRecordModel = require('../models/medicalrecord');
+const MedicalRecord = MedicalRecordModel(sequelize, DataTypes);
+
 const registerPatientController = async (req, res) => {
 
     const { fname, lname, age, contact_no,email, password, address, hstaff_id } = req.body;
@@ -61,11 +64,7 @@ const generateInvoice = async (req, res) => {
                       if (otherServiceCostsData.length > 0) {
                           totalCost = otherServiceCostsData.reduce((acc, service) => acc + parseFloat(service.service_fee), 0);
                           otherServiceCostsData.forEach((service, index) => {
-                                invoice_structure += `${service.service_name}: ${service.service_fee}\n`;
-                              
-
-                            // Add a comma and space for all except the last element
-                            
+                                invoice_structure += `${service.service_name}: ${service.service_fee}\n`;                        
                           });
                        }
                        else {
@@ -127,4 +126,19 @@ const showAllPatientDetails = async (req, res) => {
   }
 };
 
-module.exports = {registerPatientController,generateInvoice,showAllPatientDetails}
+const insertMedicalRecord = async (req,res) => {
+    const { patient_id, recorddate, diagnosis, doctor_id} = req.body;
+
+    if (patient_id === "" || recorddate === "" || diagnosis === ""|| doctor_id === "")
+    return res.status(400).json({ message: "Invalid field!" });
+
+    try {
+        const insertMedicalRecord = await MedicalRecord.create({ patient_id, recorddate, diagnosis, doctor_id, created_by: 'admin', modified_by: 'admin' });
+
+        res.status(200).json({ insertMedicalRecord});
+    } catch (err) {
+        res.status(500).json(err)
+    };
+};
+
+module.exports = {registerPatientController,generateInvoice,showAllPatientDetails,insertMedicalRecord}
