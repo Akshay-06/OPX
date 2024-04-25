@@ -47,9 +47,7 @@ const signInController = async (req, res) => {
         if (!existingUser)
             return res.status(404).json({ message: "Doctor Id doesn't exist!" })
 
-        const isPasswordOk = password === existingUser.password;
-
-        console.log(existingUser.doctor_id, existingUser.password)
+        const isPasswordOk = password === existingUser.PASSWORD;
 
         if (!isPasswordOk)
             return res.status(400).json({ message: "Invalid credentials!" })
@@ -60,7 +58,7 @@ const signInController = async (req, res) => {
 
         res
             .status(200)
-            .json({ result: existingUser, token })
+            .json({ result: existingUser, token, status:200 })
     } catch (err) {
         console.log(err)
     }

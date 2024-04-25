@@ -23,7 +23,7 @@
 }
 
 .search-jobs {
-    background-color: #861f41;
+    background-color: #48dbfb;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -40,11 +40,11 @@
 
 .search-jobs a{
     text-decoration: none;
-    color: azure;
+    color: white;
 }
 
 .search-jobs p {
-    color: #861f41;
+    color: #48dbfb;
     font-weight: bolder;
     font-size: x-large;
     margin: 0;
@@ -69,7 +69,7 @@
 }
 
 .search-buttons input[type=text]:focus {
-    border-color: #861f41;
+    border-color: #48dbfb;
 }
 
 
@@ -86,8 +86,8 @@
         sans-serif;
     font-size: 1rem;
     padding: 0.4rem 1rem;
-    background-color: #861f41;
-    border: #861f41;
+    background-color: #48dbfb;
+    border: #48dbfb;
     color: azure;
     transition: all 0.5s;
     text-decoration: none;
@@ -106,7 +106,7 @@
 }
 
 .jobs-container h1 {
-    color: #861f41;
+    color: #48dbfb;
     padding-left: 3rem;
     text-align: left;
     margin: 0;
@@ -163,8 +163,8 @@
 .apply-btn button {
     font-size: 1rem;
     padding: 0.4rem 1rem;
-    background-color: #861f41;
-    border: #861f41;
+    background-color: #48dbfb;
+    border: #48dbfb;
     color: azure;
     transition: all 0.5s;
     text-decoration: none;
@@ -204,7 +204,7 @@ ul {
 }
 
 .pagination .active {
-    background-color: #861f41;
+    background-color: #48dbfb;
     color: white;
     border-radius: 5px;
 }

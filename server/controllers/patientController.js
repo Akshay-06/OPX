@@ -1,4 +1,6 @@
 const { sequelize } = require("../config/dbConnector")
+const jwt = require("jsonwebtoken")
+const config = require("config")
 const DataTypes = require('sequelize').DataTypes;
 
 const PatientModel = require('../models/Patient');
@@ -36,6 +38,40 @@ const registerPatientController = async (req, res) => {
         res.status(500).json(err)
     };
 };
+
+const signInController = async (req, res) => {
+    
+    // normal-auth
+    const { email, password } = req.body;
+    if (email === "" || password === "")
+        return res.status(400).json({ message: "Invalid field!" });
+    try {
+        const existingUser = await Patient.findOne({where: { 
+            email: email
+        }})
+
+        if (!existingUser)
+            return res.status(404).json({ message: "Patient doesn't exist!" })
+
+        const isPasswordOk = password === existingUser.PASSWORD;
+
+        if (!isPasswordOk)
+            return res.status(400).json({ message: "Invalid credentials!" })
+
+        const token = jwt.sign({
+            email: existingUser.email,
+            id: existingUser._id
+        }, config.get("JWT_SECRET"), { expiresIn: "1h" })
+
+        res
+            .status(200)
+            .json({ result: existingUser, token, status: 200 })
+    } catch (err) {
+        console.log(err)
+    }
+
+}
+
 
 const generateInvoice = async (req, res) => {
   const { p_id, hstaff_id } = req.body;
@@ -141,4 +177,4 @@ const insertMedicalRecord = async (req,res) => {
     };
 };
 
-module.exports = {registerPatientController,generateInvoice,showAllPatientDetails,insertMedicalRecord}
+module.exports = {registerPatientController,generateInvoice,showAllPatientDetails,insertMedicalRecord, signInController}
