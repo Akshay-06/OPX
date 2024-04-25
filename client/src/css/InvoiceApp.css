@@ -17,7 +17,7 @@
   
 
 .search-container input:focus {
-    border-color: #861f41;
+    border-color: #48dbfb;
   }
 
 #customers {
@@ -40,7 +40,7 @@
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: rgb(134, 31, 65);
+    background-color: rgb(72, 219, 251);
     color: white;
   }
 
@@ -54,8 +54,8 @@
         sans-serif;
     font-size: 1rem;
     padding: 0.4rem 1rem;
-    background-color: #861f41;
-    border: #861f41;
+    background-color: #48dbfb;
+    border: #48dbfb;
     color: azure;
     cursor: pointer;
     transition: all 0.5s;

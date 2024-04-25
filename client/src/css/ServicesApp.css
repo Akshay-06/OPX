@@ -2,6 +2,11 @@
     padding: 8rem;
 }
 
+
+.headerName{
+  color: #636e72;
+}
+
 #customers {
     padding: 5rem;
     border-collapse: collapse;
@@ -10,6 +15,7 @@
   
   #customers td, #customers th {
     border: 1px solid #ddd;
+    color: #636e72;
     padding: 8px;
   }
   
@@ -41,9 +47,9 @@
         sans-serif;
     font-size: 1rem;
     padding: 0.4rem 1rem;
-    background-color: #861f41;
-    border: #861f41;
-    color: azure;
+    background-color: #48dbfb;
+    border: #48dbfb;
+    color: white;
     cursor: pointer;
     transition: all 0.5s;
     text-decoration: none;

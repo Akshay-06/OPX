@@ -12,7 +12,7 @@
 
 .logo-and-title {
     font-family: "Luckiest Guy";
-    color: azure;
+    color: white;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -23,7 +23,7 @@
 .logo-and-title-disabled{
     cursor: not-allowed;
     font-family: "Luckiest Guy";
-    color: azure;
+    color: white;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -33,8 +33,7 @@
 
 .app-header img {
     border-radius: 50%;
-    height: 50px;
-    width: 50px;
+    width: 45.54px;
 }
 
 .features-link {
@@ -44,11 +43,11 @@
 }
 
 .features-link i {
-    color: azure;
+    color: white;
 }
 
 .features-link a {
-    color: azure;
+    color: white;
     text-decoration: none;
 }
 
@@ -63,9 +62,9 @@
         sans-serif;
     font-size: 1rem;
     padding: 0.4rem 1rem;
-    background-color: azure;
-    border: #861f41;
-    color: #861f41 !important;
+    background-color: white;
+    border: #48dbfb;
+    color: #48dbfb !important;
     transition: all 0.5s;
     text-decoration: none;
 }

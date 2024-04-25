@@ -14,12 +14,9 @@ export const signin = (data2, Api, navigate) => async (dispatch) => {
     try {
         const { data } = await api.signIn(data2,Api)
         dispatch({ type: AUTH, data })
-        if(Api === 'doctor'){
-            navigate("opx/account/home/doctor")
-        }
-        else
+        
         navigate("/opx/account/home")
-
+        return data;
     } catch (error) {
         console.log(error);
         dispatch({ type: AUTH_ERROR, errorMessage: error.response.data.message })
@@ -71,13 +68,14 @@ export const signup = (formData, navigate) => async (dispatch) => {
     }
 
 
-    export const generateInvoice = (formData, navigate) => async (dispatch) => {
+    export const generateInvoice = (formData,navigate) => async (dispatch) => {
         try {
             // signup user
             const { data } = await api.generateInvoice(formData)
    
             dispatch({ type: REGISTER, data })
-            navigate("/opx/account/invoice")
+
+            return data;
         } catch (err) {
             console.log(err);
             dispatch({ type: AUTH_ERROR, errorMessage: err.response.data.message })

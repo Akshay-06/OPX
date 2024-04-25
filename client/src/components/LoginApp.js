@@ -11,31 +11,30 @@ const LoginApp = (props) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
-
-        console.log({userType,email,password});
         if (email !== "" && password !== "") {
-            if(userType == "Patient"){
-                
-                console.log("Patient")
-               
+            let signInData;
+            if (userType === "Doctor") {
+                signInData = { doctor_id: email, password };
+            } else {
+                signInData = { email, password };
             }
-            if(userType == "Doctor"){
-                console.log("Doctor")
-                dispatch(signin({doctor_id: email,password},"/doctor",navigate))
+            
+            try {
+                const response = await dispatch(signin(signInData, "/" + userType.toLowerCase(), navigate));
+               if(response.status === 200)
+               localStorage.setItem('userType', userType)
+                // Handle the response here
+            } catch (error) {
+                console.error("Error:", error);
+                // Handle any errors
             }
-            if(userType == "Hospital Staff"){
-                console.log("Hospital Staff")
-                dispatch(signin({ email, password },"/staff", navigate))
-            }
-
-        //   dispatch(signin({ email, password }, navigate))
+        } else {
+            // Handle form validation errors
         }
-        else{
-
-        }
-      }
+    }
+    
     return (
         <div className='app-login'>
             <div className="login-container">
@@ -45,7 +44,7 @@ const LoginApp = (props) => {
                             <option>--Select User Type--</option>
                             <option>Patient</option>
                             <option>Doctor</option>
-                            <option>Hospital Staff</option>
+                            <option value="staff">Hospital Staff</option>
                         </select>
                     <input type="text" onChange={e => setEmail(e.target.value)} placeholder="Username" required/>
                     <input type="password" onChange={e => setPassword(e.target.value)} placeholder="Password" required/>
@@ -67,7 +66,6 @@ const LoginApp = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
       errorMessage: state.auth.errorMessage,
     };

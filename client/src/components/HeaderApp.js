@@ -17,7 +17,7 @@ const HeaderApp = ({ authenticated, handleLogOut }) => {
 
     const handleScroll = () => {
       // Check if the scroll position is greater than 200 pixels
-      const newColor = window.scrollY > height - 200 ? '#861f41' : 'transparent';
+      const newColor = window.scrollY > height - 200 ? '#48dbfb' : 'transparent';
 
       // Update the background color state
       setColor(newColor);
@@ -33,14 +33,14 @@ const HeaderApp = ({ authenticated, handleLogOut }) => {
   }, []); // Empty dependency array ensures that this effect runs only once
 
   return (
-    <div className='app-header' style={isHomePage ? { backgroundColor: `${color}` } : { backgroundColor: '#861f41' }}>
+    <div className='app-header' style={isHomePage ? { backgroundColor: `${color}` } : { backgroundColor: '#48dbfb' }}>
       {authenticated ? <Link className='logo-and-title-disabled' to="/opx" onClick={(event) => event.preventDefault()}>
-        <img src='/images/logo.png' alt='logo'></img>
+        <img src='/images/logo.jpeg' alt='logo'></img>
         <span>OPX</span>
       </Link>
         :
         <Link className='logo-and-title' to="/opx" >
-          <img src='/images/logo.png' alt='logo'></img>
+          <img src='/images/logo.jpeg' alt='logo'></img>
           <span>OPX</span>
         </Link>}
 
