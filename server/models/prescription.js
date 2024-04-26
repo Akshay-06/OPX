@@ -17,6 +17,7 @@ module.exports = function(sequelize, DataTypes) {
     p_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
       references: {
         model: 'patient',
         key: 'p_id'
@@ -25,6 +26,7 @@ module.exports = function(sequelize, DataTypes) {
     doctor_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
       references: {
         model: 'doctor',
         key: 'doctor_id'
@@ -44,9 +46,10 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     pres_id: {
+      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      unique: "idx_prescription_pres_id"
     }
   }, {
     sequelize,
@@ -61,7 +64,8 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "date_prescribed" },
-          { name: "pres_id" },
+          { name: "p_id" },
+          { name: "doctor_id" },
         ]
       },
       {

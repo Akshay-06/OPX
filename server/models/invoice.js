@@ -50,7 +50,12 @@ module.exports = function(sequelize, DataTypes) {
       references: {
         model: 'prescription',
         key: 'pres_id'
-      }
+      },
+      unique: "idx_prescription_pres_id"
+    },
+    invoice_breakdown: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   }, {
     sequelize,
@@ -68,17 +73,18 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
+        name: "pres_id_UNIQUE",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "pres_id" },
+        ]
+      },
+      {
         name: "p_id",
         using: "BTREE",
         fields: [
           { name: "p_id" },
-        ]
-      },
-      {
-        name: "idx_prescription_pres_id",
-        using: "BTREE",
-        fields: [
-          { name: "pres_id" },
         ]
       },
     ]
