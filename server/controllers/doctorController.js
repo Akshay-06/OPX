@@ -3,11 +3,13 @@ const DataTypes = require('sequelize').DataTypes;
 const jwt = require("jsonwebtoken")
 const config = require("config")
 
-const DoctorModel = require('../models/Doctor');
-const PrescriptionModel = require('../models/Prescription');
+const DoctorModel = require('../models/doctor');
+const PrescriptionModel = require('../models/prescription');
+const MedicalRecordModel = require('../models/medicalrecord');
 
 const Doctor = DoctorModel(sequelize, DataTypes);
 const Prescription = PrescriptionModel(sequelize, DataTypes);
+const MedicalRecord = MedicalRecordModel(sequelize, DataTypes);
 
 const createPrescription = async (req, res) => {
     const { date_prescribed, labtests, medication, p_id, doctor_id } = req.body;
@@ -63,6 +65,6 @@ const signInController = async (req, res) => {
         console.log(err)
     }
 
-}
+};
 
 module.exports = {registerDoctorController, signInController, createPrescription}

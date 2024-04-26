@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken")
 const config = require("config")
 const DataTypes = require('sequelize').DataTypes;
 
-const PatientModel = require('../models/Patient');
+const PatientModel = require('../models/patient');
 
 const Patient = PatientModel(sequelize, DataTypes);
 
@@ -16,7 +16,7 @@ const Service = ServiceModel(sequelize,DataTypes);
 const InvoiceModel = require('../models/invoice');
 const Invoice = InvoiceModel(sequelize,DataTypes);
 
-const HospitalstaffModel = require('../models/Hospitalstaff');
+const HospitalstaffModel = require('../models/hospitalstaff');
 
 const Hospitalstaff = HospitalstaffModel(sequelize, DataTypes);
 
@@ -70,8 +70,25 @@ const signInController = async (req, res) => {
         console.log(err)
     }
 
-}
+};
 
+const getPatientInvoices = async (req,res) => {
+    const {p_id} = req.body;
+    if (p_id === "")
+        return res.status(400).json({ message: "Invalid patient ID" });
+    try {
+        const invoices = await Invoice.findAll({
+            where: {
+              p_id: p_id,
+            },
+          });
+          if (invoices.length === 0)
+            console.log('No invoices found for p_id ${p_id}.');
+        res.status(200).json({ invoices });
+    } catch (err) {
+        console.log(err)
+    }
+};
 
 const generateInvoice = async (req, res) => {
   const { p_id, hstaff_id } = req.body;
@@ -123,12 +140,13 @@ const generateInvoice = async (req, res) => {
                           pres_id: prescription.pres_id,
                           billing_address: patient.address,
                           amount: totalCost,
+                          invoice_breakdown: invoice_structure,
                           invoice_date: invoiceDate,
                           payment_status: paymentStatus,
                           created_by: hospitalstaff.fname + ' ' + hospitalstaff.lname, 
                           modified_by: hospitalstaff.fname + ' ' + hospitalstaff.lname
                       })
-                          res.status(200).json({ message: "Invoice created successfully" , invoice_details, invoice_structure});
+                          res.status(200).json({ message: "Invoice created successfully" , invoice_details});
                     
                   } else {
                       // Handle case where consultation service fee is not found
@@ -163,18 +181,34 @@ const showAllPatientDetails = async (req, res) => {
 };
 
 const insertMedicalRecord = async (req,res) => {
-    const { patient_id, recorddate, diagnosis, doctor_id} = req.body;
+    const {p_id, recorddate, diagnosis, doctor_id} = req.body;
 
-    if (patient_id === "" || recorddate === "" || diagnosis === ""|| doctor_id === "")
-    return res.status(400).json({ message: "Invalid field!" });
-
+    if (p_id === "" || recorddate === "" || diagnosis === "")
+        return res.status(400).json({ message: "Invalid field!" });
     try {
-        const insertMedicalRecord = await MedicalRecord.create({ patient_id, recorddate, diagnosis, doctor_id, created_by: 'admin', modified_by: 'admin' });
-
+        const insertMedicalRecord = await MedicalRecord.create({ p_id, recorddate, diagnosis, doctor_id, created_by: 'admin', modified_by: 'admin' });
         res.status(200).json({ insertMedicalRecord});
     } catch (err) {
         res.status(500).json(err)
     };
 };
 
-module.exports = {registerPatientController,generateInvoice,showAllPatientDetails,insertMedicalRecord, signInController}
+const getMedicalRecords = async (req,res) => {
+    const {p_id} = req.body;
+    if (p_id === "")
+        return res.status(400).json({ message: "Invalid patient ID" });
+    try {
+        const medicalRecords = await MedicalRecord.findAll({
+            where: {
+              p_id: p_id,
+            },
+          });
+          if (medicalRecords.length === 0)
+            console.log('No medical records found for p_id ${p_id}.');
+        res.status(200).json({ medicalRecords });
+    } catch (err) {
+        console.log(err)
+    }
+};
+
+module.exports = {registerPatientController, generateInvoice , showAllPatientDetails, insertMedicalRecord, signInController, getMedicalRecords, getPatientInvoices}
