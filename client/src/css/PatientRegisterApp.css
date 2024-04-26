@@ -1,11 +1,11 @@
-.register {
+.patient-register {
     display: flex;
     height: 100vh;
     align-items: center;
     justify-content: center;
   }
   
-  .app-register {
+  .app-patient-register {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -22,19 +22,19 @@
     width: 400px;
   }
   
-  .registerForm {
+  .patient-registerForm {
     max-width: 700px;
     color: #2d3436;
   }
   
-  .app-register .title {
+  .app-patient-register .title {
     text-align: left;
     font-size: 25px;
     font-weight: 500;
     position: relative;
   }
   
-  .app-register .title::before {
+  .app-patient-register .title::before {
     content: "";
     position: absolute;
     left: 0;
@@ -45,26 +45,26 @@
     background: linear-gradient(135deg, #48dbfb, #ca4f00);
   }
   
-  .content .register-form .user-details {
+  .content .register-form .user-patient-details {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     margin: 20px 0 12px 0;
   }
   
-  .register-form .user-details .input-box {
+  .register-form .user-patient-details .input-box {
     margin-bottom: 15px;
     width: calc(100% / 2 - 20px);
   }
   
-  .register-form .input-box span.details {
+  .patient-details {
     display: block;
     font-weight: 500;
     text-align: left;
     margin-bottom: 5px;
   }
   
-  .user-details .input-box input {
+  .user-patient-details .input-box input {
     width: 100%;
     outline: none;
     background-color: #eee;
@@ -75,12 +75,12 @@
     border-bottom-width: 2px;
   }
   
-  .user-details .input-box input:focus,
-  .user-details .input-box input:valid {
+  .user-patient-details .input-box input:focus,
+  .user-patient-details .input-box input:valid {
     border-color: #48dbfb;
   }
   
-  .register-form .category {
+  .user-patient-details .category {
     display: flex;
     width: 80%;
     margin: 14px 0;
@@ -105,12 +105,12 @@
     font-weight: bold;
   }
   
-  .register-form .button {
+  .patient-button{
     height: 45px;
     margin: 20px 0px 5px 0px;
   }
   
-  .register-form .button input {
+   .patient-button input {
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -124,9 +124,9 @@
     text-transform: uppercase;
   }
   
-  .register-form .button input:hover {
+  .patient-button input:hover {
     /* transform: scale(0.99); */
-    background: linear-gradient(135deg, #81ecec, #0abde3);
+    background: linear-gradient(135deg, #0abde3, #81ecec);
   }
   
   .social-container-register {
@@ -194,7 +194,7 @@
   }
   
   @media(max-width: 1125px) {
-    .app-register {
+    .app-patient-register {
       max-width: 100%;
       flex-direction: column;
       margin-top: 500px;
@@ -204,27 +204,27 @@
   
   
   @media(max-width: 584px) {
-    .app-register {
+    .app-patient-register {
       max-width: 100%;
       flex-direction: column;
       margin-top: 400px;
     }
   
-    .register-form .user-details .input-box {
+    .register-form .user-patient-details .input-box {
       margin-bottom: 15px;
       width: 100%;
     }
   
-    .register-form .category {
+    .user-patient-details .category {
       width: 100%;
     }
   
-    .content .register-form .user-details {
+    .content .register-form .user-patient-details {
       max-height: 300px;
       overflow-y: scroll;
     }
   
-    .user-details::-webkit-scrollbar {
+    .user-patient-details::-webkit-scrollbar {
       width: 5px;
     }
   
@@ -241,7 +241,7 @@
   }
   
   @media(max-width: 459px) {
-    .app-register .content .category {
+    .app-patient-register .content .category {
       flex-direction: column;
     }
   }

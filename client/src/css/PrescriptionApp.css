@@ -1,29 +1,41 @@
-.fetch-services-container{
+.fetch-patient-container{
     padding: 8rem;
 }
 
-
-.headerName{
-  color: #636e72;
+.search-box input{
+    display: flex;
+    width: 20%;
+    outline: none;
+    background-color: #eee;
+    border-radius: 5px;
+    padding: 12px 15px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
 }
+  
 
-#services {
+.search-box input:focus {
+    border-color: #48dbfb;
+  }
+
+#patient {
     padding: 5rem;
     border-collapse: collapse;
     width: 100%;
   }
   
-  #services td, #services th {
+  #patient td, #patient th {
     border: 1px solid #ddd;
     color: #636e72;
     padding: 8px;
   }
   
-  #services tr:nth-child(even){background-color: #f2f2f2;}
+  #patient tr:nth-child(even){background-color: #f2f2f2;}
   
-  #services tr:hover {background-color: #ddd;}
-  
-  #services th {
+  #patient tr:hover {background-color: #ddd;}
+
+  #patient th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
@@ -32,15 +44,9 @@
   }
 
 
-  .buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: space-between;
-    float: right;
-    margin: 1rem 0rem;
-}
 
-.buttons {
+
+.prescription-buttons {
     border-radius: 10px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -49,19 +55,15 @@
     padding: 0.4rem 1rem;
     background-color: #48dbfb;
     border: #48dbfb;
-    color: white;
+    color: azure;
     cursor: pointer;
     transition: all 0.5s;
     text-decoration: none;
 }
 
-.buttons:active {
+.prescription-buttons:active {
     transform: translateY(4px);
     /* Scaling button to 0.98 to its original size */
     box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
     /* Lowering the shadow */
-}
-
-.fa-edit,.fa-trash-alt{
-  cursor: pointer;
 }

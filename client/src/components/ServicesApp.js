@@ -110,7 +110,7 @@ const ServicesApp = () => {
 
       <h1 className='headerName'>Services</h1>
       <button className="buttons" onClick={handleAddService}>Add Service</button>
-      <table id="customers">
+      <table id="services">
         <thead>
           <tr>
             <th>Service ID</th>

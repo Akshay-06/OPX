@@ -47,24 +47,21 @@ export const signup = (formData, navigate) => async (dispatch) => {
             dispatch({ type: REGISTER, data })
             navigate("/opx/account/doctor-register")
         } catch (err) {
-            console.log(err);
-            dispatch({ type: AUTH_ERROR, errorMessage: err.response.data.message })
+            console.log(err.response.data.errors[0].message);
+            dispatch({ type: AUTH_ERROR, errorMessage: err.response.data.errors[0].message })
    
         }
     }
 
+
     export const createPrescription = (formData, navigate) => async (dispatch) => {
-        try {
+        
             // signup user
             const { data } = await api.createPrescription(formData)
    
             dispatch({ type: REGISTER, data })
-            navigate("/opx/account/prescription-create")
-        } catch (err) {
-            console.log(err);
-            dispatch({ type: AUTH_ERROR, errorMessage: err.response.data.message })
-   
-        }
+            navigate("/opx/account/write-prescription")
+        
     }
 
 

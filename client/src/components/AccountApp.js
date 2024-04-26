@@ -28,8 +28,22 @@ const AccountApp = () => {
             </div>
         ) : userType === "Doctor" ? (
             <div className='app-account'>
-                <h1>Doctor</h1>
-                {/* Render Doctor specific content */}
+                <div className="register-buttons">
+                    <div className="search-jobs">
+                        <Link to="/opx/account/write-prescription">WRITE PRESCRIPTION</Link>
+                    </div>
+                    <div className="search-jobs">
+                        <Link to="/opx/account/doctor/medical-record">VIEW/UPDATE MEDICAL RECORD</Link>
+                    </div> 
+                </div>
+                {/* <div className="register-buttons">
+                    <div className="search-jobs">
+                        <Link to="/opx/account/services">SERVICES</Link>
+                    </div>
+                    <div className="search-jobs">
+                        <Link to="/opx/account/invoice">GENERATE INVOICE</Link>
+                    </div>
+                </div> */}
             </div>
         ) : (
             <div className='app-account'>

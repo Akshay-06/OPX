@@ -1,92 +1,88 @@
-import React, { useState } from "react";
-import '../css/PatientRegisterApp.css';
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, connect } from 'react-redux';
-import { createPrescription } from "../redux/actions/auth";
-import Notification from "./Notification";
-
-
-
-const InitState = {
-    date_prescribed: "",
-    labtests: "",
-    medication: '',
-    p_id: ''
-}
+import React, { useEffect, useState } from 'react';
+import { getAllPatientsDetails } from '../redux/actions/auth';
+import '../css/PrescriptionApp.css';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import CreatePrescriptionApp from './CreatePrescriptionApp';
 
 const PrescriptionApp = (props) => {
-
-    const nagivate = useNavigate();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [sForm,
-        setsForm] = useState(InitState)
-    const [showNotification, setShowNotification] = useState(false);
+    const [patients, setPatients] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedPatient, setSelectedPatient] = useState(null);
+    const [showPrescriptionForm, setShowPrescriptionForm] = useState(false);
     const userID = JSON.parse(localStorage.getItem("user_info")).result.doctor_id;
 
-    const handleChange = (e) => setsForm({
-        ...sForm,
-        [e.target.name]: e.target.value
+    useEffect(() => {
+        fetchAllPatientData();
+    }, []);
+
+    const fetchAllPatientData = async () => {
+        const response = await dispatch(getAllPatientsDetails());
+        setPatients(response.patientDetails);
+    };
+
+    const handleSearch = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredPatients = patients.filter((patient) => {
+        return patient.fname.toLowerCase().includes(searchQuery.toLowerCase());
     });
 
-    function handleOnSubmit(e) {
-        e.preventDefault();
-        if (sForm.date_prescribed !== "" && sForm.labtests !== "" && sForm.medication !== "" && sForm.p_id !== "" ) {
-             sForm.doctor_id = userID
-            dispatch(createPrescription(sForm, nagivate))
-            setShowNotification(true);
-            setTimeout(() => {
-                setShowNotification(false);
-                setsForm(InitState);
-            }, 3000);
-        }
-    }
+    const handleCreatePrescription = (patient) => {
+        setSelectedPatient(patient);
+        setShowPrescriptionForm(prevState => !prevState);
+    };
+    
+
+    const handleClosePrescriptionForm = () => {
+        setShowPrescriptionForm(false);
+    };
 
     return (
-        <div className='register'>
-            {showNotification && (
-                <Notification
-                    message="Prescription Created Successful!"
-                    onClose={() => setShowNotification(false)}
+        <div className="fetch-patient-container">
+            <h1>Patient Details</h1>
+            <div className="search-box">
+                <input
+                    type="text"
+                    placeholder="Search by First Name"
+                    value={searchQuery}
+                    onChange={handleSearch}
+                />
+            </div>
+            <table id="patient">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {filteredPatients.map((patient) => (
+                        <tr key={patient.p_id}>
+                            <td>{patient.fname}</td>
+                            <td>{patient.lname}</td>
+                            <td>{patient.email}</td>
+                            <td>
+                                <button className='prescription-buttons' onClick={() => handleCreatePrescription(patient)}>Create Prescription</button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            {showPrescriptionForm && selectedPatient && (
+                <CreatePrescriptionApp
+                    patient={selectedPatient}
+                    onClose={handleClosePrescriptionForm}
+                    doctorId={userID}
                 />
             )}
-            <div className="app-register">
-                <div className='registerForm'>
-                    <div className="title">Create Prescription</div>
-                    <div className="content">
-                        <form action="#" className="register-form" onSubmit={handleOnSubmit}>
-                            <div className="user-details">
-                                <div className="input-box">
-                                    <span className="details">Date Prescribed</span>
-                                    <input name='date_prescribed' value={sForm.date_prescribed} onChange={handleChange} type="date" placeholder="Enter Date Prescribed" required />
-                                </div>
-                                <div className="input-box">
-                                    <span className="details">Lab Tests</span>
-                                    <input type="text" value={sForm.labtests} name="labtests" onChange={handleChange} placeholder="Enter Lab Test" required />
-                                </div>
-                                <div className="input-box">
-                                    <span className="details">Medication</span>
-                                    <input type="text" name="medication" value={sForm.medication} onChange={handleChange} placeholder="Enter Medication" required />
-                                </div>
-                                <div className="input-box">
-                                    <span className="details">Patient ID</span>
-                                    <input type='number' name='p_id' pattern="[0-9]{10}" value={sForm.p_id} onChange={handleChange} placeholder="Enter Patient's number" required />
-                                </div>
-                                
-                            </div>
-
-                            <div className="button">
-                                <input type="submit" value="Create" />
-                            </div>
-                            {props.errorMessage && <div className="error-message">{props.errorMessage}</div>}
-
-
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
-    )
-}
+    );
+};
 
-
-export default (PrescriptionApp);
+export default PrescriptionApp;

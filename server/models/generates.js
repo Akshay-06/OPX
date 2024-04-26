@@ -35,9 +35,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'generates',
-    timestamps: true,
     createdAt:'created_at',
     updatedAt:'modified_at',
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",

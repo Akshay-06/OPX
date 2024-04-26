@@ -9,10 +9,11 @@ import AccountApp from "./components/AccountApp";
 import PatientRegisterApp from "./components/PatientRegisterApp";
 import DoctorRegisterApp from "./components/DoctorRegisterApp";
 import ServicesApp from "./components/ServicesApp";
-import DoctorAccountApp from "./components/DoctorAccountApp";
 import PrescriptionApp from "./components/PrescriptionApp";
 import InvoiceApp from "./components/InvoiceApp";
+
 import './css/App.css';
+import MedicalRecordApp from "./components/MedicalRecordApp";
 
 function App() {
   const dispatch = useDispatch();
@@ -44,11 +45,12 @@ function App() {
       <Route path='/opx/login' Component={LoginApp} />
       <Route path='/opx/account/home' Component={AccountApp} />
       <Route path="/opx/account/patient-register" Component={PatientRegisterApp} />
-      <Route path="/opx/account/home/doctor" Component={DoctorAccountApp}/>
       <Route path="/opx/account/doctor-register" Component={DoctorRegisterApp} />
       <Route path="/opx/account/prescription-create" Component={PrescriptionApp}/>
       <Route path="/opx/account/services" Component={ServicesApp} />
       <Route path="/opx/account/invoice" Component={InvoiceApp} />
+      <Route path="/opx/account/write-prescription" Component={PrescriptionApp}/>
+      <Route path="/opx/account/doctor/medical-record" Component={MedicalRecordApp}/>
       {/* <Route path="/opx/forgot-password" Component={ForgotPasswordApp}></Route>
       <Route path="/opx/reset-password/:id/:token" Component={ResetPasswordApp}></Route>
       <Route path="/opx/account/myprofile" Component={ProfileApp} />

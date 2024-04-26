@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getAllPatientsDetails, generateInvoice } from '../redux/actions/auth';
-import InvoiceDetailsPopup from './InvoiceDetailsPopup';
+import { getAllPatientsDetails } from '../redux/actions/auth';
 import '../css/InvoiceApp.css';
 
-const InvoiceApp = () => {
+const MedicalRecordApp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [patients, setPatients] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [invoiceDetails, setInvoiceDetails] = useState(null); // State for invoice details
-  const userID = JSON.parse(localStorage.getItem('user_info')).result.hstaff_id;
+  
+  
 
   useEffect(() => {
     fetchAllPatientData();
@@ -30,19 +29,19 @@ const InvoiceApp = () => {
     return patient.fname.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
-  const handleGenerateInvoice = async (patientId) => {
-    const invoiceDetails = await dispatch(generateInvoice({ p_id: patientId, hstaff_id: userID }, navigate));
-    console.log(invoiceDetails.invoice_structure)
-    setInvoiceDetails(invoiceDetails); // Set the invoice details
-  };
+//   const handleGenerateInvoice = async (patientId) => {
+//     const invoiceDetails = await dispatch(generateInvoice({ p_id: patientId, hstaff_id: userID }, navigate));
+//     console.log(invoiceDetails.invoice_structure)
+//     setInvoiceDetails(invoiceDetails); // Set the invoice details
+//   };
 
   const closeInvoiceDetailsPopup = () => {
-    setInvoiceDetails(null); // Close the popup by setting invoice details to null
+    // setInvoiceDetails(null); // Close the popup by setting invoice details to null
   };
 
   return (
     <div className="fetch-patients-container">
-      <h1>Patient Details</h1>
+      <h1>Patient Medical Record Details</h1>
       <div className="search-container">
         <input
           type="text"
@@ -67,17 +66,17 @@ const InvoiceApp = () => {
               <td>{patient.lname}</td>
               <td>{patient.email}</td>
               <td>
-                <button className='invoice-buttons' onClick={() => handleGenerateInvoice(patient.p_id)}>Generate Invoice</button>
+                <button className='invoice-buttons' >View or Update</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      {invoiceDetails && (
+      {/* {invoiceDetails && (
         <InvoiceDetailsPopup invoiceDetails={invoiceDetails} onClose={closeInvoiceDetailsPopup} />
-      )}
+      )} */}
     </div>
   );
 };
 
-export default InvoiceApp;
+export default MedicalRecordApp;
