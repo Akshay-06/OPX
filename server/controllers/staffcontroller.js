@@ -3,7 +3,7 @@ const DataTypes = require('sequelize').DataTypes;
 const jwt = require("jsonwebtoken")
 const config = require("config")
 
-const HospitalstaffModel = require('../models/Hospitalstaff');
+const HospitalstaffModel = require('../models/hospitalstaff');
 
 const Hospitalstaff = HospitalstaffModel(sequelize, DataTypes);
 
