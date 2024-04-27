@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import '../css/DoctorRegisterApp.css';
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, connect } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import { signupDoctor } from "../redux/actions/auth";
 import Notification from "./Notification";
 

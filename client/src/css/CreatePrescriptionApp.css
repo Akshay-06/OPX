@@ -1,0 +1,93 @@
+/* CreatePrescriptionApp.css */
+
+.prescription-form-popup {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.prescription-form-popup .close-button {
+    
+    position: absolute;
+    top: 210px;
+    right: 350px;
+    font-size: 20px;
+    color: #777;
+    cursor: pointer;
+    border: none;
+    background: none;
+    outline: none;
+    padding: 0;
+}
+
+.prescription-form-popup .close-button:hover {
+    color: #333;
+}
+
+.prescription-form-popup .title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.prescription-form-popup .content {
+    margin-top: 20px;
+}
+
+.prescription-form-popup .register-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.prescription-form-popup .user-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.prescription-form-popup .input-box {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.prescription-form-popup .input-box span.details {
+    font-weight: bold;
+}
+
+.prescription-form-popup .input-box input[type="date"],
+.prescription-form-popup .input-box input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.prescription-form-popup .button {
+    margin-top: 20px;
+}
+
+.prescription-form-popup .button input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.prescription-form-popup .button input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+

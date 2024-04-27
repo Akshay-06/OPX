@@ -9,6 +9,6 @@ router.get("/allPatients",showAllPatientDetails)
 router.post("/insertMedicalRecord",insertMedicalRecord)
 router.post("/signin", signInController)
 router.get("/viewMedicalRecord", getMedicalRecords)
-router.get("/viewInvoices", getPatientInvoices)
+router.post("/viewInvoices", getPatientInvoices)
 
 module.exports = router;

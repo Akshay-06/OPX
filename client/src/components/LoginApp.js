@@ -50,7 +50,7 @@ const LoginApp = (props) => {
                     <input type="password" onChange={e => setPassword(e.target.value)} placeholder="Password" required/>
                     <div className='forgotContainer'>
                         <div>
-                            <Link to="/hokieforu/forgot-password">Forgot Password</Link>
+                            <Link to="/opx/forgot-password">Forgot Password</Link>
                         </div>
                     </div>
                     <div className='sigin'>

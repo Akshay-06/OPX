@@ -55,15 +55,15 @@ module.exports = function(sequelize, DataTypes) {
       unique: "patient_email_key"
     },
     PASSWORD: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(255),
       allowNull: false
     }
   }, {
     sequelize,
     tableName: 'patient',
-    timestamps: true,
     createdAt:'created_at',
     updatedAt:'modified_at',
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",
