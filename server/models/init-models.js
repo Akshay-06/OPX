@@ -26,12 +26,14 @@ function initModels(sequelize) {
   var service = _service(sequelize, DataTypes);
   var uploads = _uploads(sequelize, DataTypes);
 
+  doctor.belongsToMany(patient, { as: 'p_id_patients', through: prescription, foreignKey: "doctor_id", otherKey: "p_id" });
   hospitalstaff.belongsToMany(invoice, { as: 'invoice_no_invoices', through: generates, foreignKey: "hstaff_id", otherKey: "invoice_no" });
   hospitalstaff.belongsToMany(lab_report, { as: 'report_id_lab_reports', through: uploads, foreignKey: "hstaff_id", otherKey: "report_id" });
   hospitalstaff.belongsToMany(service, { as: 'service_id_services', through: decides, foreignKey: "hstaff_id", otherKey: "service_id" });
   invoice.belongsToMany(hospitalstaff, { as: 'hstaff_id_hospitalstaff_generates', through: generates, foreignKey: "invoice_no", otherKey: "hstaff_id" });
   invoice.belongsToMany(service, { as: 'service_id_service_includes', through: includes, foreignKey: "invoice_no", otherKey: "service_id" });
   lab_report.belongsToMany(hospitalstaff, { as: 'hstaff_id_hospitalstaff_uploads', through: uploads, foreignKey: "report_id", otherKey: "hstaff_id" });
+  patient.belongsToMany(doctor, { as: 'doctor_id_doctors', through: prescription, foreignKey: "p_id", otherKey: "doctor_id" });
   service.belongsToMany(hospitalstaff, { as: 'hstaff_id_hospitalstaffs', through: decides, foreignKey: "service_id", otherKey: "hstaff_id" });
   service.belongsToMany(invoice, { as: 'invoice_no_invoice_includes', through: includes, foreignKey: "service_id", otherKey: "invoice_no" });
   medicalrecord.belongsTo(doctor, { as: "doctor", foreignKey: "doctor_id"});
@@ -58,12 +60,12 @@ function initModels(sequelize) {
   patient.hasMany(invoice, { as: "invoices", foreignKey: "p_id"});
   lab_report.belongsTo(patient, { as: "p", foreignKey: "p_id"});
   patient.hasMany(lab_report, { as: "lab_reports", foreignKey: "p_id"});
-  medicalrecord.belongsTo(patient, { as: "patient", foreignKey: "patient_id"});
-  patient.hasMany(medicalrecord, { as: "medicalrecords", foreignKey: "patient_id"});
+  medicalrecord.belongsTo(patient, { as: "p", foreignKey: "p_id"});
+  patient.hasMany(medicalrecord, { as: "medicalrecords", foreignKey: "p_id"});
   prescription.belongsTo(patient, { as: "p", foreignKey: "p_id"});
   patient.hasMany(prescription, { as: "prescriptions", foreignKey: "p_id"});
   invoice.belongsTo(prescription, { as: "pre", foreignKey: "pres_id"});
-  prescription.hasMany(invoice, { as: "invoices", foreignKey: "pres_id"});
+  prescription.hasOne(invoice, { as: "invoice", foreignKey: "pres_id"});
   decides.belongsTo(service, { as: "service", foreignKey: "service_id"});
   service.hasMany(decides, { as: "decides", foreignKey: "service_id"});
   includes.belongsTo(service, { as: "service", foreignKey: "service_id"});

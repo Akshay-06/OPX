@@ -20,23 +20,24 @@
     border-color: #48dbfb;
   }
 
-#customers {
+#patients {
     padding: 5rem;
     border-collapse: collapse;
     width: 100%;
   }
   
-  #customers td, #customers th {
+  #patients td, #patients th {
     border: 1px solid #ddd;
+    color: #636e72;
     padding: 8px;
   }
   
-  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  #patients tr:nth-child(even){background-color: #f2f2f2;}
   
-  #customers tr:hover {background-color: #ddd;}
+  #patients tr:hover {background-color: #ddd;}
 
 
-  #customers th {
+  #patients th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;

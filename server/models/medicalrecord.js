@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('medicalrecord', {
-    patient_id: {
+    p_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
@@ -43,16 +43,16 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'medicalrecord',
-    timestamps: true,
     createdAt:'created_at',
     updatedAt:'modified_at',
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "patient_id" },
+          { name: "p_id" },
           { name: "recorddate" },
         ]
       },

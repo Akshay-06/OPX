@@ -21,12 +21,17 @@ export const generateInvoice = (data) => API.post("staff/generateInvoice", data)
 
 export const getAllServices = (data) => API.get(`/staff/allServiceDetails`)
 export const addService = (data) => API.post(`/staff/addService`,data)
+export const createmedicalrecord= (data) => API.post(`/patient/insertMedicalRecord`,data)
 
 export const updateService = (data) => API.post(`/staff/updateService`,data)
 export const deleteService = (data) => API.post(`/staff/deleteService`,data)
 
 
 export const getAllPatients = (data) => API.get(`/patient/allPatients`)
+export const getmedicalRecord = (data) => API.post(`/doctor/viewPatientRecord`,data)
+
+export const getInvoiceDetail = (data) => API.post(`/patient/viewInvoices`,data)
+
 // export const signInGoogle = (accessToken) => API.post("/users/signin", {
 //     googleAccessToken: accessToken
 // })

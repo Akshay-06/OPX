@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getAllPatientsDetails, generateInvoice } from '../redux/actions/auth';
-import Notification from './Notification';
 import InvoiceDetailsPopup from './InvoiceDetailsPopup';
 import '../css/InvoiceApp.css';
 
@@ -11,9 +10,6 @@ const InvoiceApp = () => {
   const navigate = useNavigate();
   const [patients, setPatients] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [showAddNotification, setShowAddNotification] = useState(false);
-  const [showUpdateNotification, setShowUpdateNotification] = useState(false);
-  const [showDeleteNotification, setShowDeleteNotification] = useState(false);
   const [invoiceDetails, setInvoiceDetails] = useState(null); // State for invoice details
   const userID = JSON.parse(localStorage.getItem('user_info')).result.hstaff_id;
 
@@ -36,7 +32,7 @@ const InvoiceApp = () => {
 
   const handleGenerateInvoice = async (patientId) => {
     const invoiceDetails = await dispatch(generateInvoice({ p_id: patientId, hstaff_id: userID }, navigate));
-    console.log(invoiceDetails.invoice_structure)
+    // console.log(invoiceDetails.invoice_structure)
     setInvoiceDetails(invoiceDetails); // Set the invoice details
   };
 
@@ -55,7 +51,7 @@ const InvoiceApp = () => {
           onChange={handleSearch}
         />
       </div>
-      <table id="customers">
+      <table id="patients">
         <thead>
           <tr>
             <th>First Name</th>

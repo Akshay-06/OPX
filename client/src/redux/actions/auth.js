@@ -39,6 +39,7 @@ export const signup = (formData, navigate) => async (dispatch) => {
      }
 
 
+
      export const signupDoctor = (formData, navigate) => async (dispatch) => {
         try {
             // signup user
@@ -47,24 +48,21 @@ export const signup = (formData, navigate) => async (dispatch) => {
             dispatch({ type: REGISTER, data })
             navigate("/opx/account/doctor-register")
         } catch (err) {
-            console.log(err);
-            dispatch({ type: AUTH_ERROR, errorMessage: err.response.data.message })
+            console.log(err.response.data.errors[0].message);
+            dispatch({ type: AUTH_ERROR, errorMessage: err.response.data.errors[0].message })
    
         }
     }
 
+
     export const createPrescription = (formData, navigate) => async (dispatch) => {
-        try {
+        
             // signup user
             const { data } = await api.createPrescription(formData)
    
             dispatch({ type: REGISTER, data })
-            navigate("/opx/account/prescription-create")
-        } catch (err) {
-            console.log(err);
-            dispatch({ type: AUTH_ERROR, errorMessage: err.response.data.message })
-   
-        }
+            navigate("/opx/account/write-prescription")
+        
     }
 
 
@@ -98,6 +96,19 @@ export const signup = (formData, navigate) => async (dispatch) => {
     }
 
 
+    export const createMedicalRecord = (data1, navigate) => async (dispatch) => {
+        try {
+            // signup user
+            const { data } = await api.createmedicalrecord(data1)
+   
+            dispatch({ type: REGISTER, data })
+            // navigate("/opx/account/patient/medical-record")
+        } catch (err) {
+            console.log(err);
+            dispatch({ type: AUTH_ERROR, errorMessage: err.response.data.message })
+   
+        }
+    }
 
 
 
@@ -120,6 +131,24 @@ export const signup = (formData, navigate) => async (dispatch) => {
             }
         }
 
+        export const getMedicalDetails = (formData,navigate) => async (dispatch) => {
+            try {
+                const { data } = await api.getmedicalRecord(formData);
+                return data;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+
+        export const getInvoiceDetails = (formData,navigate) => async (dispatch) => {
+            try {
+                const { data } = await api.getInvoiceDetail(formData);
+                return data;
+            } catch (error) {
+                console.log(error);
+            }
+        }
 
 
 
