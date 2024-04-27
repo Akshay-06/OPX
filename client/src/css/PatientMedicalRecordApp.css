@@ -1,0 +1,17 @@
+ .closed-button {
+    
+    position: absolute;
+    top: 270px;
+    right: 350px;
+    font-size: 20px;
+    color: #777;
+    cursor: pointer;
+    border: none;
+    background: none;
+    outline: none;
+    padding: 0;
+}
+
+ .closed-button:hover {
+    color: #333;
+}

@@ -1,0 +1,39 @@
+/* InvoiceDetailsPopup.css */
+
+.invoice-details-popup {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .invoice-details-content {
+    background-color: white;
+    margin: 20% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+  }
+  
+  .invoice-details-content .close-button {
+    
+    position: absolute;
+    top: 315px;
+    right: 400px;
+    font-size: 20px;
+    color: #777;
+    cursor: pointer;
+    border: none;
+    background: none;
+    outline: none;
+    padding: 0;
+}
+
+.invoice-details-content .close-button:hover {
+    color: #333;
+}

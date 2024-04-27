@@ -1,0 +1,75 @@
+.fetch-patients-container{
+    padding: 8rem;
+}
+
+
+.search-container input{
+    display: flex;
+    width: 20%;
+    outline: none;
+    background-color: #eee;
+    border-radius: 5px;
+    padding: 12px 15px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+}
+  
+
+.search-container input:focus {
+    border-color: #48dbfb;
+  }
+
+#patients {
+    padding: 5rem;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #patients td, #patients th {
+    border: 1px solid #ddd;
+    color: #636e72;
+    padding: 8px;
+  }
+  
+  #patients tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #patients tr:hover {background-color: #ddd;}
+
+
+  #patients th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgb(72, 219, 251);
+    color: white;
+  }
+
+
+  
+
+.invoice-buttons {
+    border-radius: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    font-size: 1rem;
+    padding: 0.4rem 1rem;
+    background-color: #48dbfb;
+    border: #48dbfb;
+    color: azure;
+    cursor: pointer;
+    transition: all 0.5s;
+    text-decoration: none;
+}
+
+.invoice-buttons:active {
+    transform: translateY(4px);
+    /* Scaling button to 0.98 to its original size */
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+    /* Lowering the shadow */
+}
+
+.fa-edit,.fa-trash-alt{
+  cursor: pointer;
+}
