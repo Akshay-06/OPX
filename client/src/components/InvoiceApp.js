@@ -32,7 +32,7 @@ const InvoiceApp = () => {
 
   const handleGenerateInvoice = async (patientId) => {
     const invoiceDetails = await dispatch(generateInvoice({ p_id: patientId, hstaff_id: userID }, navigate));
-    console.log(invoiceDetails.invoice_structure)
+    // console.log(invoiceDetails.invoice_structure)
     setInvoiceDetails(invoiceDetails); // Set the invoice details
   };
 

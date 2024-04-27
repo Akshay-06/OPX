@@ -55,7 +55,7 @@ module.exports = function(sequelize, DataTypes) {
       unique: "patient_email_key"
     },
     PASSWORD: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(255),
       allowNull: false
     }
   }, {

@@ -1,5 +1,6 @@
 const { sequelize } = require("../config/dbConnector")
 const jwt = require("jsonwebtoken")
+const bcrypt = require("bcryptjs")
 const config = require("config")
 const DataTypes = require('sequelize').DataTypes;
 
@@ -31,7 +32,14 @@ const registerPatientController = async (req, res) => {
     return res.status(400).json({ message: "Invalid field!" });
 
     try {
-        const registerPatient = await Patient.create({ fname, lname, age, contact_no, email, password, address, hstaff_id, created_by: 'admin', modified_by: 'admin' });
+        const existingUser = await Patient.findOne({where: { 
+            email: email
+        }})
+
+        if (existingUser)
+            return res.status(400).json({ message: "Email already exists!" })
+        const hashedPassword = await bcrypt.hash(password, 12)
+        const registerPatient = await Patient.create({ fname, lname, age, contact_no, email, PASSWORD: hashedPassword, address, hstaff_id, created_by: 'admin', modified_by: 'admin' });
 
         res.status(200).json({ registerPatient});
     } catch (err) {
@@ -53,7 +61,7 @@ const signInController = async (req, res) => {
         if (!existingUser)
             return res.status(404).json({ message: "Patient doesn't exist!" })
 
-        const isPasswordOk = password === existingUser.PASSWORD;
+            const isPasswordOk = await bcrypt.compare(password, existingUser.password);
 
         if (!isPasswordOk)
             return res.status(400).json({ message: "Invalid credentials!" })
@@ -195,6 +203,7 @@ const insertMedicalRecord = async (req,res) => {
 
 const getMedicalRecords = async (req,res) => {
     const {p_id} = req.body;
+    console.log(req.body);
     if (p_id === "")
         return res.status(400).json({ message: "Invalid patient ID" });
     try {
@@ -210,5 +219,6 @@ const getMedicalRecords = async (req,res) => {
         console.log(err)
     }
 };
+
 
 module.exports = {registerPatientController, generateInvoice , showAllPatientDetails, insertMedicalRecord, signInController, getMedicalRecords, getPatientInvoices}

@@ -14,6 +14,8 @@ import InvoiceApp from "./components/InvoiceApp";
 
 import './css/App.css';
 import MedicalRecordApp from "./components/MedicalRecordApp";
+import PatientMedicalRecordApp from "./components/PatientMedicalRecordApp";
+import PatientInvoiceApp from "./components/PatientInvoiceApp";
 
 function App() {
   const dispatch = useDispatch();
@@ -51,8 +53,9 @@ function App() {
       <Route path="/opx/account/invoice" Component={InvoiceApp} />
       <Route path="/opx/account/write-prescription" Component={PrescriptionApp}/>
       <Route path="/opx/account/doctor/medical-record" Component={MedicalRecordApp}/>
-      {/* <Route path="/opx/forgot-password" Component={ForgotPasswordApp}></Route>
-      <Route path="/opx/reset-password/:id/:token" Component={ResetPasswordApp}></Route>
+      <Route path="/opx/account/patient/medical-record" Component={PatientMedicalRecordApp}/>
+      <Route path="/opx/account/patient/invoice-details" Component={PatientInvoiceApp}/>
+      {/*<Route path="/opx/reset-password/:id/:token" Component={ResetPasswordApp}></Route>
       <Route path="/opx/account/myprofile" Component={ProfileApp} />
       <Route path="/opx/account/myjobs" Component={FetchJobApp} />  
      <Route path="*" Component={NotFoundPage} /> */}

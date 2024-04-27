@@ -8,6 +8,6 @@ const router = express.Router()
 router.post("/signin", signInController)
 router.post("/prescription", createPrescription)
 router.post("/insertPatientRecord", insertMedicalRecord)
-router.get("/viewPatientRecord", getMedicalRecords)
+router.post("/viewPatientRecord", getMedicalRecords)
 
 module.exports = router;

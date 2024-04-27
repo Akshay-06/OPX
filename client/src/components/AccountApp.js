@@ -34,7 +34,7 @@ const AccountApp = () => {
                     </div>
                     <div className="search-jobs">
                         <Link to="/opx/account/doctor/medical-record">VIEW/UPDATE MEDICAL RECORD</Link>
-                    </div> 
+                    </div>
                 </div>
                 {/* <div className="register-buttons">
                     <div className="search-jobs">
@@ -47,8 +47,14 @@ const AccountApp = () => {
             </div>
         ) : (
             <div className='app-account'>
-                <h1>Patient</h1>
-                {/* Render default content */}
+                <div className="register-buttons">
+                    <div className="search-jobs">
+                        <Link to="/opx/account/patient/invoice-details">VIEW INVOICE</Link>
+                    </div>
+                    <div className="search-jobs">
+                        <Link to="/opx/account/patient/medical-record">VIEW/UPDATE MEDICAL RECORD</Link>
+                    </div>
+                </div>
             </div>
         )
     );
