@@ -61,7 +61,7 @@ const signInController = async (req, res) => {
         if (!existingUser)
             return res.status(404).json({ message: "Patient doesn't exist!" })
 
-            const isPasswordOk = await bcrypt.compare(password, existingUser.password);
+            const isPasswordOk = await bcrypt.compare(password, existingUser.PASSWORD);
 
         if (!isPasswordOk)
             return res.status(400).json({ message: "Invalid credentials!" })

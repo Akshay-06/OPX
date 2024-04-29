@@ -40,7 +40,7 @@ const PatientInvoiceApp = () => {
             <h1>Invoice Details</h1>
             {invoiceDetails && invoiceDetails.length === 0 ? (
                 <div>
-                    <h1>No Invoice DEtails Found</h1>
+                    <h1>No Invoice Details Found</h1>
                 </div>
             ) : (
 
